@@ -4,9 +4,27 @@ import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { ExternalLink } from "lucide-react"
 import type { Components } from "react-markdown"
+import { Children, isValidElement, type ReactNode } from "react"
 
 interface MarkdownContentProps {
   content: string
+}
+
+// Check if children contain a block-level element (like figure from our img component)
+function hasBlockElement(children: ReactNode): boolean {
+  return Children.toArray(children).some((child) => {
+    if (isValidElement(child)) {
+      const type = child.type
+      if (typeof type === "string" && ["figure", "div", "img"].includes(type)) {
+        return true
+      }
+      // Check for our custom figure component output
+      if (child.props?.className?.includes("my-5")) {
+        return true
+      }
+    }
+    return false
+  })
 }
 
 export function MarkdownContent({ content }: MarkdownContentProps) {
@@ -28,12 +46,17 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
       </h3>
     ),
 
-    // Paragraphs
-    p: ({ children }) => (
-      <p className="text-muted-foreground leading-relaxed mb-4 last:mb-0">
-        {children}
-      </p>
-    ),
+    // Paragraphs — use div if it contains block-level elements (like images)
+    p: ({ children }) => {
+      if (hasBlockElement(children)) {
+        return <div className="mb-4 last:mb-0">{children}</div>
+      }
+      return (
+        <p className="text-muted-foreground leading-relaxed mb-4 last:mb-0">
+          {children}
+        </p>
+      )
+    },
 
     // Inline code
     code: ({ children, className }) => {
