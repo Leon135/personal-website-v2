@@ -70,7 +70,7 @@ export function Navbar() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                    transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
                     className="absolute inset-0 rounded-full bg-primary/15 border border-primary/25"
                   />
                 )}
@@ -84,10 +84,10 @@ export function Navbar() {
                 {isActive && (
                   <motion.span
                     key={id}
-                    initial={{ opacity: 0, width: 0 }}
-                    animate={{ opacity: 1, width: "auto" }}
-                    exit={{ opacity: 0, width: 0 }}
-                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                    initial={{ opacity: 0, maxWidth: 0 }}
+                    animate={{ opacity: 1, maxWidth: 80 }}
+                    exit={{ opacity: 0, maxWidth: 0 }}
+                    transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
                     className="relative text-xs font-medium overflow-hidden whitespace-nowrap text-primary"
                   >
                     {item.name}
