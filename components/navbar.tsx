@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const navItems = [
@@ -54,14 +54,6 @@ function NavItem({
   isActive: boolean
 }) {
   const [hovered, setHovered] = useState(false)
-  const labelRef = useRef<HTMLSpanElement>(null)
-  const [labelWidth, setLabelWidth] = useState(0)
-
-  useEffect(() => {
-    if (labelRef.current) {
-      setLabelWidth(labelRef.current.scrollWidth)
-    }
-  }, [])
 
   return (
     <a
@@ -94,30 +86,21 @@ function NavItem({
         }`}
       />
 
-      {/* Label — hidden to measure width */}
-      <span
-        ref={labelRef}
-        aria-hidden
-        className="absolute opacity-0 pointer-events-none text-xs font-medium whitespace-nowrap"
-      >
-        {item.name}
-      </span>
-
-      {/* Animated width container — only expands when active, not on hover */}
-      {isActive && (
-        <motion.span
-          initial={{ width: 0 }}
-          animate={{ width: labelWidth }}
-          exit={{ width: 0 }}
-          transition={SPRING}
-          className="overflow-hidden whitespace-nowrap flex items-center"
-          style={{ display: "flex" }}
-        >
-          <span className="text-xs font-medium leading-none text-primary">
+      {/* Label — crossfade only, no width animation */}
+      <AnimatePresence mode="wait">
+        {isActive && (
+          <motion.span
+            key={`label-${item.name}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="text-xs font-medium leading-none text-primary whitespace-nowrap"
+          >
             {item.name}
-          </span>
-        </motion.span>
-      )}
+          </motion.span>
+        )}
+      </AnimatePresence>
     </a>
   )
 }
