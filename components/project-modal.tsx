@@ -5,7 +5,7 @@ import { X, ExternalLink, Github } from "lucide-react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+
 import { getStatusBadgeClasses, getStatusLabel } from "@/lib/status-utils";
 import type { Project } from "@/lib/types";
 import { MarkdownContent } from "@/components/markdown-content";
@@ -20,7 +20,10 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
   if (!project) return null;
 
   return (
-    <DialogPrimitive.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <DialogPrimitive.Root
+      open={isOpen}
+      onOpenChange={(open) => !open && onClose()}
+    >
       <AnimatePresence>
         {isOpen && (
           <DialogPrimitive.Portal forceMount>
@@ -76,9 +79,8 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 min-h-0 overflow-hidden">
-                  <ScrollArea className="h-full">
-                    <div className="p-6">
+                <div className="flex-1 min-h-0 overflow-y-auto">
+                  <div className="p-6">
                     {/* Technologies */}
                     <div className="mb-6">
                       <h3 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">
@@ -98,8 +100,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 
                     {/* Project details from markdown */}
                     <MarkdownContent content={project.content} />
-                    </div>
-                  </ScrollArea>
+                  </div>
                 </div>
 
                 {/* Footer with links */}
@@ -120,7 +121,9 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                     <Button
                       variant="secondary"
                       size="lg"
-                      className={project.liveUrl ? "flex-1 py-3" : "w-full py-3"}
+                      className={
+                        project.liveUrl ? "flex-1 py-3" : "w-full py-3"
+                      }
                       asChild
                     >
                       <a
