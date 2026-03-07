@@ -1,30 +1,27 @@
-"use client"
+"use client";
 
-import ReactMarkdown from "react-markdown"
-import remarkGfm from "remark-gfm"
-import { ExternalLink } from "lucide-react"
-import type { Components } from "react-markdown"
-import { Children, isValidElement, type ReactNode } from "react"
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { ExternalLink } from "lucide-react";
+import type { Components } from "react-markdown";
+import type { Element } from "hast";
 
 interface MarkdownContentProps {
-  content: string
+  content: string;
 }
 
-// Check if children contain a block-level element (like figure from our img component)
-function hasBlockElement(children: ReactNode): boolean {
-  return Children.toArray(children).some((child) => {
-    if (isValidElement(child)) {
-      const type = child.type
-      if (typeof type === "string" && ["figure", "div", "img"].includes(type)) {
-        return true
-      }
-      // Check for our custom figure component output
-      if (child.props?.className?.includes("my-5")) {
-        return true
-      }
+// Check if AST node contains an image (which we render as a block-level figure)
+function containsImage(node: Element): boolean {
+  if (!node.children) return false;
+  return node.children.some((child) => {
+    if (child.type === "element" && child.tagName === "img") {
+      return true;
     }
-    return false
-  })
+    if (child.type === "element" && child.children) {
+      return containsImage(child as Element);
+    }
+    return false;
+  });
 }
 
 export function MarkdownContent({ content }: MarkdownContentProps) {
@@ -47,32 +44,33 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
     ),
 
     // Paragraphs — use div if it contains block-level elements (like images)
-    p: ({ children }) => {
-      if (hasBlockElement(children)) {
-        return <div className="mb-4 last:mb-0">{children}</div>
+    p: ({ children, node }) => {
+      // If paragraph contains an image, render as div to avoid invalid nesting
+      if (node && containsImage(node)) {
+        return <div className="mb-4 last:mb-0">{children}</div>;
       }
       return (
         <p className="text-muted-foreground leading-relaxed mb-4 last:mb-0">
           {children}
         </p>
-      )
+      );
     },
 
     // Inline code
     code: ({ children, className }) => {
-      const isBlock = className?.includes("language-")
+      const isBlock = className?.includes("language-");
       if (isBlock) {
         return (
           <code className="block font-mono text-xs bg-secondary text-primary p-4 rounded-lg overflow-x-auto whitespace-pre leading-relaxed">
             {children}
           </code>
-        )
+        );
       }
       return (
         <code className="font-mono text-xs bg-secondary text-primary px-1.5 py-0.5 rounded">
           {children}
         </code>
-      )
+      );
     },
 
     // Code block wrapper
@@ -93,9 +91,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
 
     // Unordered list
     ul: ({ children }) => (
-      <ul className="mb-4 space-y-1.5 list-none pl-0">
-        {children}
-      </ul>
+      <ul className="mb-4 space-y-1.5 list-none pl-0">{children}</ul>
     ),
 
     // Ordered list
@@ -128,7 +124,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
 
     // Images — rendered in a styled container
     img: ({ src, alt }) => {
-      if (!src) return null
+      if (!src) return null;
       return (
         <figure className="my-5">
           <div className="overflow-hidden rounded-lg border border-border bg-secondary/40">
@@ -146,13 +142,11 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             </figcaption>
           )}
         </figure>
-      )
+      );
     },
 
     // Horizontal rule
-    hr: () => (
-      <hr className="my-6 border-border" />
-    ),
+    hr: () => <hr className="my-6 border-border" />,
 
     // Strong / bold
     strong: ({ children }) => (
@@ -185,7 +179,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
     td: ({ children }) => (
       <td className="px-4 py-2.5 text-muted-foreground">{children}</td>
     ),
-  }
+  };
 
   return (
     <div className="markdown-content">
@@ -193,5 +187,5 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
         {content}
       </ReactMarkdown>
     </div>
-  )
+  );
 }
