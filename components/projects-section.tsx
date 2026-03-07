@@ -54,7 +54,7 @@ export function ProjectsSection({ projects = [] }: ProjectsSectionProps) {
         {/* Projects grid */}
         {projects.length > 0 ? (
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-40px" }}

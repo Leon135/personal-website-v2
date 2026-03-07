@@ -148,7 +148,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                   className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  Live Demo
+                  {project.liveUrlLabel ?? "Live Demo"}
                 </a>
               )}
               {project.githubUrl && (
@@ -161,7 +161,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                   }`}
                 >
                   <Github className="w-4 h-4" />
-                  Source
+                  {project.githubUrlLabel ?? "Source"}
                 </a>
               )}
             </div>

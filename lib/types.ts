@@ -5,7 +5,9 @@ export interface Project {
   title: string
   description: string
   liveUrl?: string
+  liveUrlLabel?: string
   githubUrl?: string
+  githubUrlLabel?: string
   technologies: string[]
   featured: boolean
   status?: ProjectStatus
@@ -17,7 +19,9 @@ export interface ProjectFrontmatter {
   title: string
   description: string
   liveUrl?: string
+  liveUrlLabel?: string
   githubUrl?: string
+  githubUrlLabel?: string
   technologies: string[]
   featured?: boolean
   status?: ProjectStatus

@@ -18,14 +18,14 @@ export function ProjectCard({ project, index, onOpenModal }: ProjectCardProps) {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
       }}
-      className="group"
+      className="group h-full"
     >
-      <GlowCard>
+      <GlowCard className="h-full">
         <button
           onClick={() => onOpenModal(project)}
-          className="w-full text-left"
+          className="w-full h-full text-left"
         >
-          <div className="relative p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors duration-300">
+          <div className="relative p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors duration-300 h-full flex flex-col">
             {/* Index number */}
             <span className="absolute top-4 right-4 font-mono text-xs text-muted-foreground/30">
               {String(index + 1).padStart(2, "0")}
@@ -93,7 +93,7 @@ export function ProjectCard({ project, index, onOpenModal }: ProjectCardProps) {
             </div>
 
             {/* Links indicator */}
-            <div className="flex items-center gap-4 pt-4 border-t border-border">
+            <div className="mt-auto flex items-center gap-4 pt-4 border-t border-border">
               {project.liveUrl && (
                 <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
                   <ExternalLink className="w-3 h-3" />

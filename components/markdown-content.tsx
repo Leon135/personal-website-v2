@@ -107,13 +107,13 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
     img: ({ src, alt }) => {
       if (!src) return null
       return (
-        <figure className="my-5 group">
+        <figure className="my-5">
           <div className="overflow-hidden rounded-lg border border-border bg-secondary/40">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={src}
               alt={alt ?? ""}
-              className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-[1.015]"
+              className="w-full h-auto object-cover"
               loading="lazy"
             />
           </div>
