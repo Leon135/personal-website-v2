@@ -120,7 +120,7 @@ function NavItem({
       >
         <span
           className={`text-xs font-medium leading-none ${
-            isActive ? "text-primary" : "text-muted-foreground"
+            isActive ? "text-primary" : "text-muted-foreground/60"
           }`}
         >
           {item.name}
