@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
-import { 
-  Shield, 
-  Code2, 
-  Layers, 
-  Box, 
+import { motion } from "framer-motion";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Shield,
+  Code2,
+  Layers,
+  Box,
   Sparkles,
   Brain,
   Lightbulb,
@@ -15,41 +15,64 @@ import {
   RefreshCw,
   Target,
   TrendingUp,
-  Flame
-} from "lucide-react"
+  Flame,
+} from "lucide-react";
 
 const whatIDo = [
-  { icon: Shield, label: "Cybersecurity", description: "Securing systems & ethical hacking" },
-  { icon: Code2, label: "Software Development", description: "Building robust applications" },
-  { icon: Layers, label: "Fullstack Development", description: "Frontend to backend, end to end" },
-  { icon: Box, label: "3D Modeling", description: "Creating digital worlds & assets" },
-  { icon: Sparkles, label: "And more...", description: "A bit of everything else" },
-]
+  {
+    icon: Shield,
+    label: "Cybersecurity",
+    description: "Ethical hacking & pentesting",
+  },
+  {
+    icon: Code2,
+    label: "Software Development",
+    description: "Building tools, plugins & apps",
+  },
+  {
+    icon: Layers,
+    label: "Fullstack Development",
+    description: "Frontend to backend, end to end",
+  },
+  {
+    icon: Box,
+    label: "3D Modeling",
+    description: "Creating digital worlds & assets",
+  },
+  {
+    icon: Sparkles,
+    label: "And more...",
+    description: "A bit of everything else",
+  },
+];
 
 const abilities = [
-  { icon: Brain, label: "Problem Solving" },
-  { icon: Lightbulb, label: "Critical Thinking" },
   { icon: Zap, label: "Quick Learning" },
   { icon: RefreshCw, label: "Adaptability" },
-]
+  { icon: Brain, label: "Problem Solving" },
+  { icon: Lightbulb, label: "Critical Thinking" },
+];
 
 const principles = [
-  { 
-    icon: TrendingUp, 
-    title: "Constant Self-Improvement", 
-    description: "Always learning, always growing. Every day is an opportunity to be better than yesterday."
+  {
+    icon: TrendingUp,
+    title: "Constant Self-Improvement",
+    description:
+      "Always learning, always growing. Every day is an opportunity to be better than yesterday.",
   },
-  { 
-    icon: Target, 
-    title: "Working On Your Goals", 
-    description: "Dreams without action are just wishes. I believe in putting in the work to make things happen."
+  {
+    icon: Target,
+    title: "Working On Your Goals",
+    description:
+      "Dreams without action are just wishes. I believe in putting in the work to make things happen.",
   },
-  { 
-    icon: Flame, 
-    title: "Staying Motivated & In Habit", 
-    description: "Discipline beats motivation. Building habits that compound into results over time."
+  {
+    icon: Flame,
+    title: "Staying Motivated & In Habit",
+    description:
+      "Discipline beats motivation. Building habits that compound into results over time.",
   },
-]
+];
 
 export function AboutSection() {
   return (
@@ -64,16 +87,17 @@ export function AboutSection() {
           className="mb-12"
         >
           <div className="flex items-center gap-4 mb-4">
-            <Badge variant="outline" className="text-xs font-mono text-primary bg-primary/10 border-primary/20">
+            <Badge
+              variant="outline"
+              className="text-xs font-mono text-primary bg-primary/10 border-primary/20"
+            >
               01
             </Badge>
             <div className="h-px flex-1 bg-gradient-to-r from-border to-transparent" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold">
-            About Me
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold">About Me</h2>
           <p className="text-muted-foreground mt-2 text-lg">
-            Hi, I&apos;m Kuba - also known as Leon135
+            Hi, I'm Kuba - also known as Leon135
           </p>
         </motion.div>
 
@@ -86,11 +110,14 @@ export function AboutSection() {
           className="mb-10"
         >
           <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">
-            I believe in constant self-improvement, learning and helping others. 
-            I strive to be the best version of myself and to make a positive impact 
-            on the world around me. I won&apos;t say I know x, y, z language or technology 
-            because it doesn&apos;t matter - if I have a project to be done, I find the best 
-            tools, adapt or extend my skillset to fulfill the requirements.
+            I believe in constant self-improvement, learning and helping others.
+            I strive to be the best version of myself and to make a positive
+            impact on the world around me. 
+          </p>
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mt-4">
+            I won't say I know x, y, z language or technology because it doesn't
+            matter - if I have a project to be done, I find the best tools,
+            adapt or extend my skillset to fulfill the requirements.
           </p>
         </motion.div>
 
@@ -118,7 +145,9 @@ export function AboutSection() {
                       <item.icon className="w-5 h-5 text-primary" />
                     </div>
                     <h4 className="font-medium text-sm mb-1">{item.label}</h4>
-                    <p className="text-xs text-muted-foreground">{item.description}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {item.description}
+                    </p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -191,5 +220,5 @@ export function AboutSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

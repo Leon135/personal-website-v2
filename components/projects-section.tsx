@@ -47,7 +47,7 @@ export function ProjectsSection({ projects = [] }: ProjectsSectionProps) {
             <span className="text-muted-foreground">{" }"}</span>
           </h2>
           <p className="text-muted-foreground mt-2 font-mono text-sm">
-            // Things I've built
+            // Things I've built or am building.
           </p>
         </motion.div>
 
