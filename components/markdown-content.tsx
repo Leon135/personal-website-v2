@@ -3,6 +3,15 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ExternalLink } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import type { Components } from "react-markdown";
 import type { Element } from "hast";
 
@@ -146,7 +155,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
     },
 
     // Horizontal rule
-    hr: () => <hr className="my-6 border-border" />,
+    hr: () => <Separator className="my-6" />,
 
     // Strong / bold
     strong: ({ children }) => (
@@ -158,26 +167,24 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
       <em className="italic text-muted-foreground/90">{children}</em>
     ),
 
-    // Tables (from remark-gfm)
+    // Tables (from remark-gfm) - using shadcn Table components
     table: ({ children }) => (
-      <div className="my-4 overflow-x-auto rounded-lg border border-border">
-        <table className="w-full text-sm">{children}</table>
+      <div className="my-4 rounded-lg border border-border">
+        <Table>{children}</Table>
       </div>
     ),
     thead: ({ children }) => (
-      <thead className="bg-secondary text-foreground">{children}</thead>
+      <TableHeader className="bg-secondary">{children}</TableHeader>
     ),
-    tbody: ({ children }) => (
-      <tbody className="divide-y divide-border">{children}</tbody>
-    ),
-    tr: ({ children }) => <tr>{children}</tr>,
+    tbody: ({ children }) => <TableBody>{children}</TableBody>,
+    tr: ({ children }) => <TableRow>{children}</TableRow>,
     th: ({ children }) => (
-      <th className="px-4 py-2.5 text-left font-semibold text-xs uppercase tracking-wider">
+      <TableHead className="text-xs uppercase tracking-wider">
         {children}
-      </th>
+      </TableHead>
     ),
     td: ({ children }) => (
-      <td className="px-4 py-2.5 text-muted-foreground">{children}</td>
+      <TableCell className="text-muted-foreground">{children}</TableCell>
     ),
   };
 
