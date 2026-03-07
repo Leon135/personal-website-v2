@@ -9,6 +9,7 @@ technologies:
   - Tailwind CSS
   - Framer Motion
 featured: true
+status: active
 ---
 
 ## About This Project

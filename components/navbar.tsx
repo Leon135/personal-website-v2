@@ -1,13 +1,16 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 const navItems = [
   { name: "About", href: "#about" },
   { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
 ]
+
+const SPRING = { type: "spring", stiffness: 180, damping: 26, mass: 0.8 }
+const FADE = { duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }
 
 function useActiveSection() {
   const [active, setActive] = useState<string | null>(null)
@@ -43,6 +46,54 @@ function useActiveSection() {
   return active
 }
 
+function NavItem({
+  item,
+  isActive,
+}: {
+  item: (typeof navItems)[number]
+  isActive: boolean
+}) {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    <a
+      href={item.href}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="relative flex items-center gap-2 px-3 py-1.5 rounded-full cursor-pointer"
+    >
+      {/* Background pill — shows on hover (muted) or active (primary) */}
+      <AnimatePresence>
+        {(isActive || hovered) && (
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className={`absolute inset-0 rounded-full border ${isActive
+                ? "bg-primary/10 border-primary/25"
+                : "bg-muted/50 border-border"
+              }`}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Dot */}
+      <span
+        className={`relative w-1.5 h-1.5 rounded-full flex-shrink-0 flex-none ${isActive ? "bg-primary" : "bg-muted-foreground/35"
+          }`}
+      />
+
+      {/* Label — instant swap, no animation */}
+      {isActive && (
+        <span className="text-xs font-medium leading-none text-primary whitespace-nowrap">
+          {item.name}
+        </span>
+      )}
+    </a>
+  )
+}
+
 export function Navbar() {
   const activeSection = useActiveSection()
 
@@ -50,47 +101,21 @@ export function Navbar() {
     <motion.div
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
+      transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
       className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50"
     >
-      <div className="flex items-center gap-1 px-3 py-2 bg-card/90 backdrop-blur-xl border border-border rounded-full shadow-xl shadow-black/40">
+      <motion.div
+        layout
+        transition={SPRING}
+        className="flex items-center gap-1 px-3 py-2 bg-card/90 backdrop-blur-xl border border-border rounded-full shadow-xl shadow-black/40"
+      >
         {navItems.map((item) => {
           const id = item.href.replace("#", "")
-          const isActive = activeSection === id
-
           return (
-            <a
-              key={id}
-              href={item.href}
-              className="relative flex items-center gap-2 px-3 py-1.5 rounded-full transition-colors duration-300"
-            >
-              {isActive && (
-                <motion.span
-                  layoutId="nav-active"
-                  className="absolute inset-0 rounded-full bg-primary/15 border border-primary/25"
-                  transition={{ type: "spring", stiffness: 120, damping: 22 }}
-                />
-              )}
-              <span
-                className={`relative w-1.5 h-1.5 rounded-full transition-colors duration-500 ${
-                  isActive ? "bg-primary" : "bg-muted-foreground/40"
-                }`}
-              />
-              <motion.span
-                animate={{
-                  opacity: isActive ? 1 : 0,
-                  width: isActive ? "auto" : 0,
-                  marginLeft: isActive ? 0 : -4,
-                }}
-                transition={{ duration: 0.35, ease: "easeInOut" }}
-                className={`relative text-xs font-medium overflow-hidden whitespace-nowrap text-primary`}
-              >
-                {item.name}
-              </motion.span>
-            </a>
+            <NavItem key={id} item={item} isActive={activeSection === id} />
           )
         })}
-      </div>
+      </motion.div>
     </motion.div>
   )
 }

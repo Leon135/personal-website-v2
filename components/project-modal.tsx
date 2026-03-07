@@ -72,12 +72,35 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
             {/* Header */}
             <div className="flex items-start justify-between p-6 border-b border-border">
               <div>
-                <h2
-                  id="modal-title"
-                  className="text-2xl font-bold text-foreground mb-1"
-                >
-                  {project.title}
-                </h2>
+                <div className="flex items-center gap-2 mb-2">
+                  <h2
+                    id="modal-title"
+                    className="text-2xl font-bold text-foreground"
+                  >
+                    {project.title}
+                  </h2>
+                  {project.status && (
+                    <span
+                      className={`text-[10px] font-mono px-2 py-0.5 rounded border self-center ${
+                        project.status === "active"
+                          ? "text-emerald-400 bg-emerald-400/10 border-emerald-400/20"
+                          : project.status === "in-development"
+                          ? "text-amber-400 bg-amber-400/10 border-amber-400/20"
+                          : project.status === "stalled"
+                          ? "text-orange-400 bg-orange-400/10 border-orange-400/20"
+                          : "text-muted-foreground bg-muted/40 border-border"
+                      }`}
+                    >
+                      {project.status === "active"
+                        ? "ACTIVE"
+                        : project.status === "in-development"
+                        ? "IN DEVELOPMENT"
+                        : project.status === "stalled"
+                        ? "STALLED"
+                        : "ARCHIVED"}
+                    </span>
+                  )}
+                </div>
                 <p className="text-sm text-muted-foreground">
                   {project.description}
                 </p>

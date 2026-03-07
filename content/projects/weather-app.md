@@ -8,6 +8,7 @@ technologies:
   - Chart.js
   - CSS3
 featured: false
+status: archived
 ---
 
 ## About This Project

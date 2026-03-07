@@ -32,6 +32,7 @@ export function getProjectBySlug(slug: string): Project | null {
     githubUrl: frontmatter.githubUrl,
     technologies: frontmatter.technologies || [],
     featured: frontmatter.featured || false,
+    status: frontmatter.status,
     image: frontmatter.image,
     content,
   }
