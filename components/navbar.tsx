@@ -88,6 +88,7 @@ export function Navbar() {
                     animate={{ opacity: 1, maxWidth: 80 }}
                     exit={{ opacity: 0, maxWidth: 0 }}
                     transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                    style={{ maxWidth: 0 }}
                     className="relative text-xs font-medium overflow-hidden whitespace-nowrap text-primary"
                   >
                     {item.name}
