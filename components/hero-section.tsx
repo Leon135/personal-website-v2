@@ -84,9 +84,9 @@ export function HeroSection() {
           transition={{ duration: 0.4, delay: 0.3 }}
           className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl"
         >
-          A student developer passionate about building things for the web. I
-          enjoy creating clean, functional applications and learning new
-          technologies along the way.
+          Student developer building everything from web apps to modifications
+          and embeded devices. Passionate about learning and creating solutions
+          to my & world problems.
         </motion.p>
 
         {/* Keyboard hint */}

@@ -1,25 +1,25 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Github, Mail, Gamepad2 } from "lucide-react"
+import { motion } from "framer-motion";
+import { Github, Mail, Gamepad2 } from "lucide-react";
 
 const socialLinks = [
-  { 
-    name: "GitHub", 
-    href: "https://github.com/yourusername", 
+  {
+    name: "GitHub",
+    href: "https://github.com/leon135",
     icon: Github,
   },
-  { 
-    name: "Email", 
-    href: "mailto:your@email.com", 
+  {
+    name: "Email",
+    href: "mailto:contact@leon135.xyz",
     icon: Mail,
   },
-  { 
-    name: "Steam", 
-    href: "https://steamcommunity.com/id/yourusername", 
+  {
+    name: "Steam",
+    href: "https://steamcommunity.com/id/leon135",
     icon: Gamepad2,
   },
-]
+];
 
 export function ContactSection() {
   return (
@@ -42,9 +42,7 @@ export function ContactSection() {
           <h2 className="text-3xl md:text-4xl font-bold text-balance">
             Get in touch
           </h2>
-          <p className="text-muted-foreground mt-2">
-            Feel free to reach out
-          </p>
+          <p className="text-muted-foreground mt-2">Feel free to reach out</p>
         </motion.div>
 
         {/* Simple 3-button grid */}
@@ -72,5 +70,5 @@ export function ContactSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
