@@ -10,7 +10,7 @@ const navItems = [
 ]
 
 const SPRING = { type: "spring", stiffness: 180, damping: 26, mass: 0.8 }
-const FADE = { duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }
+const FADE = { duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }
 
 function useActiveSection() {
   const [active, setActive] = useState<string | null>(null)
@@ -70,37 +70,26 @@ function NavItem({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className={`absolute inset-0 rounded-full border ${
-              isActive
+            className={`absolute inset-0 rounded-full border ${isActive
                 ? "bg-primary/10 border-primary/25"
                 : "bg-muted/50 border-border"
-            }`}
+              }`}
           />
         )}
       </AnimatePresence>
 
       {/* Dot */}
       <span
-        className={`relative w-1.5 h-1.5 rounded-full flex-shrink-0 flex-none ${
-          isActive ? "bg-primary" : "bg-muted-foreground/35"
-        }`}
+        className={`relative w-1.5 h-1.5 rounded-full flex-shrink-0 flex-none ${isActive ? "bg-primary" : "bg-muted-foreground/35"
+          }`}
       />
 
-      {/* Label — crossfade only, no width animation */}
-      <AnimatePresence mode="wait">
-        {isActive && (
-          <motion.span
-            key={`label-${item.name}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="text-xs font-medium leading-none text-primary whitespace-nowrap"
-          >
-            {item.name}
-          </motion.span>
-        )}
-      </AnimatePresence>
+      {/* Label — instant swap, no animation */}
+      {isActive && (
+        <span className="text-xs font-medium leading-none text-primary whitespace-nowrap">
+          {item.name}
+        </span>
+      )}
     </a>
   )
 }
