@@ -4,24 +4,21 @@ import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { ExternalLink } from "lucide-react"
 import type { Components } from "react-markdown"
-import { Children, isValidElement, type ReactNode } from "react"
+import type { Element } from "hast"
 
 interface MarkdownContentProps {
   content: string
 }
 
-// Check if children contain a block-level element (like figure from our img component)
-function hasBlockElement(children: ReactNode): boolean {
-  return Children.toArray(children).some((child) => {
-    if (isValidElement(child)) {
-      const type = child.type
-      if (typeof type === "string" && ["figure", "div", "img"].includes(type)) {
-        return true
-      }
-      // Check for our custom figure component output
-      if (child.props?.className?.includes("my-5")) {
-        return true
-      }
+// Check if AST node contains an image (which we render as a block-level figure)
+function containsImage(node: Element): boolean {
+  if (!node.children) return false
+  return node.children.some((child) => {
+    if (child.type === "element" && child.tagName === "img") {
+      return true
+    }
+    if (child.type === "element" && child.children) {
+      return containsImage(child as Element)
     }
     return false
   })
@@ -47,8 +44,9 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
     ),
 
     // Paragraphs — use div if it contains block-level elements (like images)
-    p: ({ children }) => {
-      if (hasBlockElement(children)) {
+    p: ({ children, node }) => {
+      // If paragraph contains an image, render as div to avoid invalid nesting
+      if (node && containsImage(node)) {
         return <div className="mb-4 last:mb-0">{children}</div>
       }
       return (
