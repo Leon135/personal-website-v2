@@ -1,3 +1,5 @@
+export type ProjectStatus = "active" | "in-development" | "stalled" | "archived"
+
 export interface Project {
   slug: string
   title: string
@@ -6,6 +8,7 @@ export interface Project {
   githubUrl?: string
   technologies: string[]
   featured: boolean
+  status?: ProjectStatus
   image?: string
   content: string
 }
@@ -17,5 +20,6 @@ export interface ProjectFrontmatter {
   githubUrl?: string
   technologies: string[]
   featured?: boolean
+  status?: ProjectStatus
   image?: string
 }

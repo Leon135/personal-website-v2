@@ -104,16 +104,20 @@ function NavItem({
       </span>
 
       {/* Animated width container — only expands when active, not on hover */}
-      <motion.span
-        animate={{ width: isActive ? labelWidth : 0 }}
-        transition={SPRING}
-        className="overflow-hidden whitespace-nowrap flex items-center"
-        style={{ display: "flex" }}
-      >
-        <span className="text-xs font-medium leading-none text-primary">
-          {item.name}
-        </span>
-      </motion.span>
+      {isActive && (
+        <motion.span
+          initial={{ width: 0 }}
+          animate={{ width: labelWidth }}
+          exit={{ width: 0 }}
+          transition={SPRING}
+          className="overflow-hidden whitespace-nowrap flex items-center"
+          style={{ display: "flex" }}
+        >
+          <span className="text-xs font-medium leading-none text-primary">
+            {item.name}
+          </span>
+        </motion.span>
+      )}
     </a>
   )
 }
