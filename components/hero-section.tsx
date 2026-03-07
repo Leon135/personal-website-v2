@@ -1,17 +1,25 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useTypewriter } from "@/hooks/use-typewriter"
-import { useTextScramble } from "@/hooks/use-text-scramble"
+import { motion } from "framer-motion";
+import { useTypewriter } from "@/hooks/use-typewriter";
+import { useTextScramble } from "@/hooks/use-text-scramble";
 
 export function HeroSection() {
-  const { displayText, isComplete } = useTypewriter("Hey, I'm Kuba", 75, 300)
-  const { displayText: scrambledName, scramble } = useTextScramble("Kuba")
+  const { displayText, isComplete } = useTypewriter(
+    "Hey, I'm Leon135",
+    75,
+    300,
+  );
+  const { displayText: scrambledName, scramble } = useTextScramble("Leon135");
 
   // Split the typed text into the greeting and name parts once typing is done
-  const prefix = "Hey, I'm "
-  const typedPrefix = displayText.slice(0, Math.min(displayText.length, prefix.length))
-  const typedName = displayText.length > prefix.length ? displayText.slice(prefix.length) : ""
+  const prefix = "Hey, I'm ";
+  const typedPrefix = displayText.slice(
+    0,
+    Math.min(displayText.length, prefix.length),
+  );
+  const typedName =
+    displayText.length > prefix.length ? displayText.slice(prefix.length) : "";
 
   return (
     <section
@@ -31,7 +39,7 @@ export function HeroSection() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>
           <span className="text-xs font-mono text-muted-foreground tracking-wide">
-            AVAILABLE FOR PROJECTS
+            UNEMPLOYED STUDENT
           </span>
         </motion.div>
 
@@ -66,8 +74,7 @@ export function HeroSection() {
           transition={{ duration: 0.4, delay: 0.4 }}
           className="text-sm font-mono text-muted-foreground/60 mb-6"
         >
-          also known as{" "}
-          <span className="text-muted-foreground">Leon135</span>
+          also known as <span className="text-muted-foreground">Kuba</span>
         </motion.p>
 
         {/* Bio */}
@@ -77,8 +84,8 @@ export function HeroSection() {
           transition={{ duration: 0.4, delay: 0.3 }}
           className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6 max-w-2xl"
         >
-          A student developer passionate about building things for the web.
-          I enjoy creating clean, functional applications and learning new
+          A student developer passionate about building things for the web. I
+          enjoy creating clean, functional applications and learning new
           technologies along the way.
         </motion.p>
 
@@ -93,5 +100,5 @@ export function HeroSection() {
         </motion.p>
       </div>
     </section>
-  )
+  );
 }

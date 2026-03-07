@@ -11,36 +11,35 @@ const BASE_URL = "https://leon135.xyz"
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Kuba (Leon135) — Student Developer",
-    template: "%s | Kuba (Leon135)",
+    default: "Leon135 — Developer Portfolio",
+    template: "%s | Leon135",
   },
   description:
-    "Portfolio of Kuba, also known as Leon135 — a student developer passionate about building clean, functional web applications.",
+    "Portfolio of Leon135",
   keywords: [
     "Leon135",
-    "Kuba",
     "developer portfolio",
     "student developer",
-    "web development",
-    "frontend",
+    "software development",
     "fullstack",
+    "cybersecurity",
   ],
-  authors: [{ name: "Kuba", url: BASE_URL }],
+  authors: [{ name: "Leon135", url: BASE_URL }],
   creator: "Kuba (Leon135)",
   openGraph: {
     type: "website",
     url: BASE_URL,
     siteName: "Leon135 — Developer Portfolio",
-    title: "Kuba (Leon135) — Student Developer",
+    title: "Leon135 — Developer Portfolio",
     description:
-      "Portfolio of Kuba, also known as Leon135 — a student developer passionate about building clean, functional web applications.",
+      "Portfolio of Leon135",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kuba (Leon135) — Student Developer",
+    title: "Leon135 — Developer Portfolio",
     description:
-      "Portfolio of Kuba, also known as Leon135 — a student developer passionate about building clean, functional web applications.",
+      "Portfolio of Leon135",
     creator: "@Leon135",
   },
   alternates: {
@@ -56,23 +55,7 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
     },
   },
-  icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
-  },
+  icons: "/pfp.jpg"
 }
 
 export default function RootLayout({
