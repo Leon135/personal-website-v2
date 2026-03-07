@@ -90,17 +90,14 @@ function NavItem({
       </AnimatePresence>
 
       {/* Dot */}
-      <motion.span
-        animate={{
-          backgroundColor: isActive
-            ? "hsl(var(--primary))"
+      <span
+        className={`relative w-1.5 h-1.5 rounded-full flex-shrink-0 transition-all duration-500 ${
+          isActive
+            ? "bg-primary scale-110"
             : hovered
-            ? "hsl(var(--muted-foreground) / 0.7)"
-            : "hsl(var(--muted-foreground) / 0.35)",
-          scale: isActive ? 1.15 : 1,
-        }}
-        transition={SPRING}
-        className="relative w-1.5 h-1.5 rounded-full flex-shrink-0"
+            ? "bg-muted-foreground/70"
+            : "bg-muted-foreground/35"
+        }`}
       />
 
       {/* Label — hidden offscreen to measure, then animated in */}
@@ -118,18 +115,16 @@ function NavItem({
           opacity: showLabel ? 1 : 0,
         }}
         transition={SPRING}
-        className="overflow-hidden whitespace-nowrap"
-        style={{ display: "block" }}
+        className="overflow-hidden whitespace-nowrap flex items-center"
+        style={{ display: "flex" }}
       >
-        <motion.span
-          animate={{ opacity: showLabel ? 1 : 0 }}
-          transition={FADE}
-          className={`text-xs font-medium ${
+        <span
+          className={`text-xs font-medium leading-none ${
             isActive ? "text-primary" : "text-muted-foreground"
           }`}
         >
           {item.name}
-        </motion.span>
+        </span>
       </motion.span>
     </a>
   )
