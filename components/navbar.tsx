@@ -63,8 +63,6 @@ function NavItem({
     }
   }, [])
 
-  const showLabel = isActive || hovered
-
   return (
     <a
       href={item.href}
@@ -72,9 +70,9 @@ function NavItem({
       onMouseLeave={() => setHovered(false)}
       className="relative flex items-center gap-2 px-3 py-1.5 rounded-full cursor-pointer"
     >
-      {/* Background pill */}
+      {/* Background pill — shows on hover (muted) or active (primary) */}
       <AnimatePresence>
-        {showLabel && (
+        {(isActive || hovered) && (
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -105,14 +103,14 @@ function NavItem({
         {item.name}
       </span>
 
-      {/* Animated width container — no opacity animation */}
+      {/* Animated width container — only expands when active, not on hover */}
       <motion.span
-        animate={{ width: showLabel ? labelWidth : 0 }}
+        animate={{ width: isActive ? labelWidth : 0 }}
         transition={SPRING}
         className="overflow-hidden whitespace-nowrap flex items-center"
         style={{ display: "flex" }}
       >
-        <span className="text-xs font-medium leading-none text-muted-foreground/60">
+        <span className="text-xs font-medium leading-none text-primary">
           {item.name}
         </span>
       </motion.span>
