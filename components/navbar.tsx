@@ -119,9 +119,7 @@ function NavItem({
         style={{ display: "flex" }}
       >
         <span
-          className={`text-xs font-medium leading-none ${
-            isActive ? "text-primary" : "text-muted-foreground/60"
-          }`}
+          className="text-xs font-medium leading-none text-muted-foreground/60"
         >
           {item.name}
         </span>
