@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { ProjectCard } from "./project-card"
-import { ProjectModal } from "./project-modal"
-import type { Project } from "@/lib/types"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ProjectCard } from "./project-card";
+import { ProjectModal } from "./project-modal";
+import type { Project } from "@/lib/types";
 
 interface ProjectsSectionProps {
-  projects?: Project[]
+  projects?: Project[];
 }
 
 export function ProjectsSection({ projects = [] }: ProjectsSectionProps) {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (project: Project) => {
-    setSelectedProject(project)
-    setIsModalOpen(true)
-  }
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
 
   const closeModal = () => {
-    setIsModalOpen(false)
-    setTimeout(() => setSelectedProject(null), 200)
-  }
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedProject(null), 200);
+  };
 
   return (
     <section id="projects" className="px-6 md:px-12 lg:px-24 py-24">
@@ -43,11 +43,11 @@ export function ProjectsSection({ projects = [] }: ProjectsSectionProps) {
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-balance">
             <span className="text-muted-foreground">{"{"}</span>
-            {" "}projects{" "}
+            Projects
             <span className="text-muted-foreground">{"}"}</span>
           </h2>
           <p className="text-muted-foreground mt-2 font-mono text-sm">
-            // things I&apos;ve shipped
+            // Things I've built
           </p>
         </motion.div>
 
@@ -95,5 +95,5 @@ export function ProjectsSection({ projects = [] }: ProjectsSectionProps) {
         onClose={closeModal}
       />
     </section>
-  )
+  );
 }

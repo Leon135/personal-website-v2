@@ -1,47 +1,47 @@
-"use client"
+"use client";
 
-import { useEffect, useRef } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { X, ExternalLink, Github } from "lucide-react"
-import type { Project } from "@/lib/types"
-import { MarkdownContent } from "@/components/markdown-content"
+import { useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, ExternalLink, Github } from "lucide-react";
+import type { Project } from "@/lib/types";
+import { MarkdownContent } from "@/components/markdown-content";
 
 interface ProjectModalProps {
-  project: Project | null
-  isOpen: boolean
-  onClose: () => void
+  project: Project | null;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
-  const modalRef = useRef<HTMLDivElement>(null)
+  const modalRef = useRef<HTMLDivElement>(null);
 
   // Handle escape key
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
-        onClose()
+        onClose();
       }
     }
 
     if (isOpen) {
-      document.addEventListener("keydown", handleKeyDown)
-      document.body.style.overflow = "hidden"
+      document.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
     }
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown)
-      document.body.style.overflow = "unset"
-    }
-  }, [isOpen, onClose])
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen, onClose]);
 
   // Focus trap
   useEffect(() => {
     if (isOpen && modalRef.current) {
-      modalRef.current.focus()
+      modalRef.current.focus();
     }
-  }, [isOpen])
+  }, [isOpen]);
 
-  if (!project) return null
+  if (!project) return null;
 
   return (
     <AnimatePresence>
@@ -86,19 +86,19 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                         project.status === "active"
                           ? "text-emerald-400 bg-emerald-400/10 border-emerald-400/20"
                           : project.status === "in-development"
-                          ? "text-amber-400 bg-amber-400/10 border-amber-400/20"
-                          : project.status === "stalled"
-                          ? "text-orange-400 bg-orange-400/10 border-orange-400/20"
-                          : "text-muted-foreground bg-muted/40 border-border"
+                            ? "text-amber-400 bg-amber-400/10 border-amber-400/20"
+                            : project.status === "stalled"
+                              ? "text-orange-400 bg-orange-400/10 border-orange-400/20"
+                              : "text-muted-foreground bg-muted/40 border-border"
                       }`}
                     >
                       {project.status === "active"
                         ? "ACTIVE"
                         : project.status === "in-development"
-                        ? "IN DEVELOPMENT"
-                        : project.status === "stalled"
-                        ? "STALLED"
-                        : "ARCHIVED"}
+                          ? "IN DEVELOPMENT"
+                          : project.status === "stalled"
+                            ? "STALLED"
+                            : "ARCHIVED"}
                     </span>
                   )}
                 </div>
@@ -148,7 +148,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                   className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  {project.liveUrlLabel ?? "Live Demo"}
+                  {project.liveUrlLabel ?? "Live"}
                 </a>
               )}
               {project.githubUrl && (
@@ -169,5 +169,5 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
         </>
       )}
     </AnimatePresence>
-  )
+  );
 }
