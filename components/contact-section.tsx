@@ -42,7 +42,10 @@ export function ContactSection() {
           className="mb-12"
         >
           <div className="flex items-center gap-4 mb-4">
-            <Badge variant="outline" className="text-xs font-mono text-primary bg-primary/10 border-primary/20">
+            <Badge
+              variant="outline"
+              className="text-xs font-mono text-primary bg-primary/10 border-primary/20"
+            >
               03
             </Badge>
             <div className="h-px flex-1 bg-gradient-to-r from-border to-transparent" />
@@ -74,7 +77,11 @@ export function ContactSection() {
                       <a
                         href={link.href}
                         target={link.name !== "Email" ? "_blank" : undefined}
-                        rel={link.name !== "Email" ? "noopener noreferrer" : undefined}
+                        rel={
+                          link.name !== "Email"
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
                       >
                         <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                           <link.icon className="w-5 h-5 text-primary" />
