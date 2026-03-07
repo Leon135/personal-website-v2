@@ -1,6 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/components/ui/card"
 import { 
   Shield, 
   Code2, 
@@ -62,9 +64,9 @@ export function AboutSection() {
           className="mb-12"
         >
           <div className="flex items-center gap-4 mb-4">
-            <span className="text-xs font-mono text-primary px-2 py-1 bg-primary/10 border border-primary/20 rounded">
+            <Badge variant="outline" className="text-xs font-mono text-primary bg-primary/10 border-primary/20">
               01
-            </span>
+            </Badge>
             <div className="h-px flex-1 bg-gradient-to-r from-border to-transparent" />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold">
@@ -109,13 +111,16 @@ export function AboutSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.05 * index }}
                 viewport={{ once: true }}
-                className="p-4 rounded-lg bg-secondary/30 border border-border hover:border-primary/30 transition-colors group text-center"
               >
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                  <item.icon className="w-5 h-5 text-primary" />
-                </div>
-                <h4 className="font-medium text-sm mb-1">{item.label}</h4>
-                <p className="text-xs text-muted-foreground">{item.description}</p>
+                <Card className="bg-secondary/30 hover:border-primary/30 transition-colors group text-center h-full gap-0 py-0">
+                  <CardContent className="p-4 flex flex-col items-center justify-center h-full">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                      <item.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <h4 className="font-medium text-sm mb-1">{item.label}</h4>
+                    <p className="text-xs text-muted-foreground">{item.description}</p>
+                  </CardContent>
+                </Card>
               </motion.div>
             ))}
           </div>
@@ -138,12 +143,15 @@ export function AboutSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.05 * index }}
                 viewport={{ once: true }}
-                className="flex items-center gap-3 p-4 rounded-lg border border-border bg-secondary/30 hover:border-primary/30 transition-colors group"
               >
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                  <ability.icon className="w-5 h-5 text-primary" />
-                </div>
-                <span className="font-medium text-sm">{ability.label}</span>
+                <Card className="bg-secondary/30 hover:border-primary/30 transition-colors group h-full gap-0 py-0">
+                  <CardContent className="flex items-center gap-3 p-4 h-full">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                      <ability.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <span className="font-medium text-sm">{ability.label}</span>
+                  </CardContent>
+                </Card>
               </motion.div>
             ))}
           </div>
@@ -165,15 +173,18 @@ export function AboutSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 * index }}
                 viewport={{ once: true }}
-                className="p-6 rounded-xl bg-secondary/30 border border-border hover:border-primary/20 transition-colors group"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <principle.icon className="w-6 h-6 text-primary" />
-                </div>
-                <h4 className="font-semibold mb-2">{principle.title}</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {principle.description}
-                </p>
+                <Card className="bg-secondary/30 hover:border-primary/20 transition-colors group h-full gap-0 py-0">
+                  <CardContent className="p-6 h-full">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <principle.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <h4 className="font-semibold mb-2">{principle.title}</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {principle.description}
+                    </p>
+                  </CardContent>
+                </Card>
               </motion.div>
             ))}
           </div>

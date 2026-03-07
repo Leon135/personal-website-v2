@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { Button } from "@/components/ui/button"
 
 const navItems = [
   { name: "About", href: "#about" },
@@ -56,41 +57,48 @@ function NavItem({
   const [hovered, setHovered] = useState(false)
 
   return (
-    <a
-      href={item.href}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="relative flex items-center gap-2 px-3 py-1.5 rounded-full cursor-pointer"
+    <Button
+      variant="ghost"
+      size="sm"
+      className="relative h-auto px-3 py-1.5 rounded-full hover:bg-transparent"
+      asChild
     >
-      {/* Background pill — shows on hover (muted) or active (primary) */}
-      <AnimatePresence>
-        {(isActive || hovered) && (
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className={`absolute inset-0 rounded-full border ${isActive
-                ? "bg-primary/10 border-primary/25"
-                : "bg-muted/50 border-border"
-              }`}
-          />
+      <a
+        href={item.href}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className="flex items-center gap-2"
+      >
+        {/* Background pill — shows on hover (muted) or active (primary) */}
+        <AnimatePresence>
+          {(isActive || hovered) && (
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className={`absolute inset-0 rounded-full border ${isActive
+                  ? "bg-primary/10 border-primary/25"
+                  : "bg-muted/50 border-border"
+                }`}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Dot */}
+        <span
+          className={`relative w-1.5 h-1.5 rounded-full flex-shrink-0 flex-none ${isActive ? "bg-primary" : "bg-muted-foreground/35"
+            }`}
+        />
+
+        {/* Label — instant swap, no animation */}
+        {isActive && (
+          <span className="text-xs font-medium leading-none text-primary whitespace-nowrap">
+            {item.name}
+          </span>
         )}
-      </AnimatePresence>
-
-      {/* Dot */}
-      <span
-        className={`relative w-1.5 h-1.5 rounded-full flex-shrink-0 flex-none ${isActive ? "bg-primary" : "bg-muted-foreground/35"
-          }`}
-      />
-
-      {/* Label — instant swap, no animation */}
-      {isActive && (
-        <span className="text-xs font-medium leading-none text-primary whitespace-nowrap">
-          {item.name}
-        </span>
-      )}
-    </a>
+      </a>
+    </Button>
   )
 }
 
@@ -104,10 +112,11 @@ export function Navbar() {
       transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
       className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50"
     >
-      <motion.div
+      <motion.nav
         layout
         transition={SPRING}
         className="flex items-center gap-1 px-3 py-2 bg-card/90 backdrop-blur-xl border border-border rounded-full shadow-xl shadow-black/40"
+        aria-label="Main navigation"
       >
         {navItems.map((item) => {
           const id = item.href.replace("#", "")
@@ -115,7 +124,7 @@ export function Navbar() {
             <NavItem key={id} item={item} isActive={activeSection === id} />
           )
         })}
-      </motion.div>
+      </motion.nav>
     </motion.div>
   )
 }
