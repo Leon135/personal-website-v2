@@ -92,16 +92,16 @@ export function ProjectCard({ project, index, onOpenModal }: ProjectCardProps) {
             </CardContent>
 
             {/* Links indicator */}
-            <CardFooter className="mt-auto gap-4 border-t py-4">
+            <CardFooter className="mt-auto mb-auto gap-4 border-t py-4 h-3">
               {project.liveUrl && (
-                <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
-                  <ExternalLink className="w-3 h-3" />
+                <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground group-hover:text-foreground transition-colors pb-2">
+                  <ExternalLink className="w-3" />
                   <span className="font-mono">live</span>
                 </span>
               )}
               {project.githubUrl && (
-                <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
-                  <Github className="w-3 h-3" />
+                <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground group-hover:text-foreground transition-colors pb-2">
+                  <Github className="w-3" />
                   <span className="font-mono">source</span>
                 </span>
               )}
