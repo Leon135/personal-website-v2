@@ -76,10 +76,10 @@ function NavItem({
       <AnimatePresence>
         {showLabel && (
           <motion.span
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.85 }}
-            transition={FADE}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className={`absolute inset-0 rounded-full border ${
               isActive
                 ? "bg-primary/10 border-primary/25"
@@ -91,16 +91,12 @@ function NavItem({
 
       {/* Dot */}
       <span
-        className={`relative w-1.5 h-1.5 rounded-full flex-shrink-0 transition-all duration-500 ${
-          isActive
-            ? "bg-primary scale-110"
-            : hovered
-            ? "bg-muted-foreground/70"
-            : "bg-muted-foreground/35"
+        className={`relative w-1.5 h-1.5 rounded-full flex-shrink-0 flex-none ${
+          isActive ? "bg-primary" : "bg-muted-foreground/35"
         }`}
       />
 
-      {/* Label — hidden offscreen to measure, then animated in */}
+      {/* Label — hidden to measure width */}
       <span
         ref={labelRef}
         aria-hidden
@@ -109,18 +105,14 @@ function NavItem({
         {item.name}
       </span>
 
+      {/* Animated width container — no opacity animation */}
       <motion.span
-        animate={{
-          width: showLabel ? labelWidth : 0,
-          opacity: showLabel ? 1 : 0,
-        }}
+        animate={{ width: showLabel ? labelWidth : 0 }}
         transition={SPRING}
         className="overflow-hidden whitespace-nowrap flex items-center"
         style={{ display: "flex" }}
       >
-        <span
-          className="text-xs font-medium leading-none text-muted-foreground/60"
-        >
+        <span className="text-xs font-medium leading-none text-muted-foreground/60">
           {item.name}
         </span>
       </motion.span>
