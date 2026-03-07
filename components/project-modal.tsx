@@ -76,8 +76,9 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                 </div>
 
                 {/* Content */}
-                <ScrollArea className="flex-1">
-                  <div className="p-6">
+                <div className="flex-1 min-h-0 overflow-hidden">
+                  <ScrollArea className="h-full">
+                    <div className="p-6">
                     {/* Technologies */}
                     <div className="mb-6">
                       <h3 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">
@@ -97,8 +98,9 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 
                     {/* Project details from markdown */}
                     <MarkdownContent content={project.content} />
-                  </div>
-                </ScrollArea>
+                    </div>
+                  </ScrollArea>
+                </div>
 
                 {/* Footer with links */}
                 <div className="flex items-center gap-3 p-6 border-t border-border">
