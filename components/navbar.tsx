@@ -67,29 +67,28 @@ export function Navbar() {
               <AnimatePresence>
                 {isActive && (
                   <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-                    className="absolute inset-0 rounded-full bg-primary/15 border border-primary/25"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                    className="absolute inset-0 rounded-full bg-primary/10 border border-primary/20"
                   />
                 )}
               </AnimatePresence>
               <span
-                className={`relative w-1.5 h-1.5 rounded-full transition-colors duration-300 ${
-                  isActive ? "bg-primary" : "bg-muted-foreground/40"
+                className={`relative w-1.5 h-1.5 rounded-full transition-all duration-500 ease-out ${
+                  isActive ? "bg-primary scale-110" : "bg-muted-foreground/40"
                 }`}
               />
               <AnimatePresence mode="wait">
                 {isActive && (
                   <motion.span
                     key={id}
-                    initial={{ opacity: 0, maxWidth: 0 }}
-                    animate={{ opacity: 1, maxWidth: 80 }}
-                    exit={{ opacity: 0, maxWidth: 0 }}
-                    transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-                    style={{ maxWidth: 0 }}
-                    className="relative text-xs font-medium overflow-hidden whitespace-nowrap text-primary"
+                    initial={{ opacity: 0, x: -4 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 4 }}
+                    transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                    className="relative text-xs font-medium whitespace-nowrap text-primary/90"
                   >
                     {item.name}
                   </motion.span>

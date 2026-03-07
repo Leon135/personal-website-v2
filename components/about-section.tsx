@@ -165,7 +165,7 @@ export function AboutSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 * index }}
                 viewport={{ once: true }}
-                className="p-6 rounded-xl bg-gradient-to-b from-secondary/50 to-transparent border border-border hover:border-primary/20 transition-colors group"
+                className="p-6 rounded-xl bg-secondary/30 border border-border hover:border-primary/20 transition-colors group"
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <principle.icon className="w-6 h-6 text-primary" />
