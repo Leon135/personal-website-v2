@@ -2,6 +2,7 @@
 title: Steam Millenium plugin - CSWatch
 description: Steam plugin to quickly check CS2 player stats on CSWatch website.
 liveUrl: https://steambrew.app/plugin?id=c0f9737e4a5b
+liveUrlLabel: Steam Millenium plugin page
 githubUrl: https://github.com/Leon135/cswatch-plugin
 technologies:
   - TypeScript
@@ -16,16 +17,11 @@ This plugin adds a simple button under your Steam profile that redirects you to 
 
 It is based on the work of **@TOR968**—massive thanks to him for his contributions and inspiration
 
-## Links
-
-- [Steam Millenium plugin page](https://steambrew.app/plugin?id=c0f9737e4a5b)
-- [GitHub repository](https://github.com/Leon135/cswatch-plugin/tree/main)
-
 ## Screenshots
 
-![Profile screenshot](/cswatch-plugin/profile_screenshot.png)
+![Profile screenshot](/cswatch-plugin/profile.png)
 
-![CSWatch screenshot](/cswatch-plugin/cswatch_screenshot.png)
+![CSWatch screenshot](/cswatch-plugin/cswatch.png)
 
 ## Built with
 
