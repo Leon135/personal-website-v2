@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 const navItems = [
   { name: "About", href: "#about" },
@@ -64,29 +64,36 @@ export function Navbar() {
               href={item.href}
               className="relative flex items-center gap-2 px-3 py-1.5 rounded-full transition-colors duration-300"
             >
-              {isActive && (
-                <motion.span
-                  layoutId="nav-active"
-                  className="absolute inset-0 rounded-full bg-primary/15 border border-primary/25"
-                  transition={{ type: "spring", stiffness: 120, damping: 22 }}
-                />
-              )}
+              <AnimatePresence>
+                {isActive && (
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                    className="absolute inset-0 rounded-full bg-primary/15 border border-primary/25"
+                  />
+                )}
+              </AnimatePresence>
               <span
-                className={`relative w-1.5 h-1.5 rounded-full transition-colors duration-500 ${
+                className={`relative w-1.5 h-1.5 rounded-full transition-colors duration-300 ${
                   isActive ? "bg-primary" : "bg-muted-foreground/40"
                 }`}
               />
-              <motion.span
-                animate={{
-                  opacity: isActive ? 1 : 0,
-                  width: isActive ? "auto" : 0,
-                  marginLeft: isActive ? 0 : -4,
-                }}
-                transition={{ duration: 0.35, ease: "easeInOut" }}
-                className={`relative text-xs font-medium overflow-hidden whitespace-nowrap text-primary`}
-              >
-                {item.name}
-              </motion.span>
+              <AnimatePresence mode="wait">
+                {isActive && (
+                  <motion.span
+                    key={id}
+                    initial={{ opacity: 0, width: 0 }}
+                    animate={{ opacity: 1, width: "auto" }}
+                    exit={{ opacity: 0, width: 0 }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                    className="relative text-xs font-medium overflow-hidden whitespace-nowrap text-primary"
+                  >
+                    {item.name}
+                  </motion.span>
+                )}
+              </AnimatePresence>
             </a>
           )
         })}

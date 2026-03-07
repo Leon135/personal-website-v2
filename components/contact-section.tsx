@@ -23,7 +23,7 @@ const socialLinks = [
 
 export function ContactSection() {
   return (
-    <section id="contact" className="px-6 md:px-12 lg:px-24 py-24">
+    <section id="contact" className="px-6 md:px-12 lg:px-24 py-24 min-h-[70vh]">
       <div className="max-w-5xl mx-auto">
         {/* Section header */}
         <motion.div
