@@ -8,6 +8,8 @@ export function getStatusBadgeClasses(status: Project["status"]) {
       return "text-amber-400 bg-amber-400/10 border-amber-400/20"
     case "stalled":
       return "text-orange-400 bg-orange-400/10 border-orange-400/20"
+    case "???":
+      return "text-violet-400 bg-violet-400/10 border-violet-400/20"
     default:
       return "text-muted-foreground bg-muted/40 border-border"
   }
@@ -21,6 +23,8 @@ export function getStatusLabel(status: Project["status"]) {
       return "IN DEVELOPMENT"
     case "stalled":
       return "STALLED"
+    case "???":
+      return "???"
     default:
       return "ARCHIVED"
   }

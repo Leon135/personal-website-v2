@@ -1,4 +1,4 @@
-export type ProjectStatus = "active" | "in-development" | "stalled" | "archived"
+export type ProjectStatus = "active" | "in-development" | "stalled" | "archived"  | "???"
 
 export interface Project {
   slug: string
