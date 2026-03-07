@@ -42,9 +42,9 @@ export function ProjectsSection({ projects = [] }: ProjectsSectionProps) {
             <div className="h-px flex-1 bg-gradient-to-r from-border to-transparent" />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-balance">
-            <span className="text-muted-foreground">{"{"}</span>
+            <span className="text-muted-foreground">{"{ "}</span>
             Projects
-            <span className="text-muted-foreground">{"}"}</span>
+            <span className="text-muted-foreground">{" }"}</span>
           </h2>
           <p className="text-muted-foreground mt-2 font-mono text-sm">
             // Things I've built
