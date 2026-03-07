@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, ExternalLink, Github } from "lucide-react"
 import type { Project } from "@/lib/types"
+import { MarkdownContent } from "@/components/markdown-content"
 
 interface ProjectModalProps {
   project: Project | null
@@ -134,20 +135,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
               </div>
 
               {/* Project details from markdown */}
-              <div className="prose prose-invert prose-sm max-w-none">
-                <div
-                  className="text-muted-foreground leading-relaxed whitespace-pre-wrap"
-                  dangerouslySetInnerHTML={{
-                    __html: project.content
-                      .replace(/^## /gm, '<h2 class="text-lg font-semibold text-foreground mt-6 mb-3">')
-                      .replace(/^### /gm, '<h3 class="text-base font-medium text-foreground mt-4 mb-2">')
-                      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>')
-                      .replace(/- \*\*(.*?)\*\*/g, '<li class="ml-4"><strong class="text-foreground">$1</strong>')
-                      .replace(/<\/h2>([^<]+)/g, '</h2><p class="text-muted-foreground">$1</p>')
-                      .replace(/<\/h3>([^<]+)/g, '</h3><p class="text-muted-foreground">$1</p>')
-                  }}
-                />
-              </div>
+              <MarkdownContent content={project.content} />
             </div>
 
             {/* Footer with links */}
@@ -160,7 +148,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                   className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  Live Demo
+                  {project.liveUrlLabel ?? "Live Demo"}
                 </a>
               )}
               {project.githubUrl && (
@@ -173,7 +161,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                   }`}
                 >
                   <Github className="w-4 h-4" />
-                  Source
+                  {project.githubUrlLabel ?? "Source"}
                 </a>
               )}
             </div>
