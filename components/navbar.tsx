@@ -77,7 +77,7 @@ function NavItem({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className={`absolute inset-0 rounded-full border ${isActive
+              className={`absolute inset-0 rounded-full border z-0 ${isActive || hovered
                   ? "bg-primary/10 border-primary/25"
                   : "bg-muted/50 border-border"
                 }`}
@@ -87,16 +87,25 @@ function NavItem({
 
         {/* Dot */}
         <span
-          className={`relative w-1.5 h-1.5 rounded-full flex-shrink-0 flex-none ${isActive ? "bg-primary" : "bg-muted-foreground/35"
+          className={`relative z-10 w-1.5 h-1.5 rounded-full flex-shrink-0 flex-none ${isActive || hovered ? "bg-primary" : "bg-muted-foreground/35"
             }`}
         />
 
-        {/* Label — instant swap, no animation */}
-        {isActive && (
-          <span className="text-xs font-medium leading-none text-primary whitespace-nowrap">
-            {item.name}
-          </span>
-        )}
+        {/* Label — animated like the pill */}
+        <AnimatePresence>
+          {(isActive || hovered) && (
+            <motion.span
+              key="label"
+              initial={{ opacity: 0, x: -6 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -6 }}
+              transition={{ duration: 0.18 }}
+              className="relative z-20 text-xs font-medium leading-none text-primary whitespace-nowrap"
+            >
+              {item.name}
+            </motion.span>
+          )}
+        </AnimatePresence>
       </a>
     </Button>
   )
