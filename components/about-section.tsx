@@ -112,7 +112,7 @@ export function AboutSection() {
           <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">
             I believe in constant self-improvement, learning and helping others.
             I strive to be the best version of myself and to make a positive
-            impact on the world around me. 
+            impact on the world around me.
           </p>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mt-4">
             I won't say I know x, y, z language or technology because it doesn't
@@ -130,7 +130,7 @@ export function AboutSection() {
           className="mb-10"
         >
           <h3 className="text-xl font-semibold mb-6">What I Do</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {whatIDo.map((item, index) => (
               <motion.div
                 key={item.label}
@@ -144,8 +144,8 @@ export function AboutSection() {
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                       <item.icon className="w-5 h-5 text-primary" />
                     </div>
-                    <h4 className="font-medium text-sm mb-1">{item.label}</h4>
-                    <p className="text-xs text-muted-foreground">
+                    <h4 className="font-semibold mb-2">{item.label}</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
                       {item.description}
                     </p>
                   </CardContent>
@@ -164,11 +164,11 @@ export function AboutSection() {
           className="mb-10"
         >
           <h3 className="text-xl font-semibold mb-6">My Abilities</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {abilities.map((ability, index) => (
               <motion.div
                 key={ability.label}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 10 }} 
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.05 * index }}
                 viewport={{ once: true }}
@@ -178,7 +178,7 @@ export function AboutSection() {
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                       <ability.icon className="w-5 h-5 text-primary" />
                     </div>
-                    <span className="font-medium text-sm">{ability.label}</span>
+                    <span className="font-semibold">{ability.label}</span>
                   </CardContent>
                 </Card>
               </motion.div>
