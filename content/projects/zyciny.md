@@ -11,13 +11,13 @@ status: stalled
 
 ## Coming soon
 
-Project is in a held state, I don't work on it from a long time, but I want to finish it one day. It is a website for a Polish village Życiny, it will contain information about the village, news, events, and maybe something more.
+Project is in a held state, I don't work on it from a long time, but I want to finish it one day. It's a website for a Polish village Życiny, it will contain information about the village, news, events, and maybe something more.
 
-Still yet to decide if it is going to be closed/open source.
+Still yet to decide if it's going to be closed/open source.
 
 ## Disclaimer
 
-If you want to check it out go on. But quick disclaimer: it is not finished, it is not even close to be finished, it is just a MVP (Minimal Viable Product), so don't expect much from it. Very very basic website with only a few pages and no content. But it is a start. :)
+If you want to check it out go on. But quick disclaimer: it's not finished, it's not even close to be finished, it's just a MVP (Minimal Viable Product), so don't expect much from it. Very very basic website with only a few pages and no content. But it's a start. :)
 
 ## Built with
 

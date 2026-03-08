@@ -36,9 +36,9 @@ English version:
 
 ## Description
 
-Website counting down the time to extended math exam (matura). It uses a changed quote from year 1984 George Orwell's novel. The website is in Polish. The idea comes from ammount of math exercises with parameter, which we must solve for matura. Exercises with "parameter" are in masses. That is where \"parametr to niewola\" (parameter is slavery) comes from. Project is strictly hobbistic, made for fun. I don't promote any sort of rebelion towards CKE. But I would like to ;)
+**Website counting down the time to extended math exam (matura).** It uses a changed quote from year 1984 George Orwell's novel. The website is in Polish. The idea comes from ammount of math exercises with parameter, which we must solve for matura. Exercises with "parameter" are in masses. That is where \"parametr to niewola\" (parameter is slavery) comes from. Project is strictly hobbistic, made for fun. I don't promote any sort of rebelion towards CKE. But I would like to ;)
 
-It has its own CRT effect imitating old monitors, Vignette to be seen as a rounded screen and animaited noise background like old TV static.
+**It has its own CRT effect imitating old monitors, Vignette to be seen as a rounded screen and animaited noise background like old TV static.**
 
 That's it for me, im coming back to solving math exercises with parameters ;c.
 
@@ -48,6 +48,6 @@ That's it for me, im coming back to solving math exercises with parameters ;c.
 
 ## Built with
 
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) - Programming language
 - [Astro](https://astro.build/) - Static site generator
-- [Tailwind CSS](https://tailwindcss.com/) - Modular CSS framework
-- Disapproval of CKE and Polish education system
+- [Tailwind CSS](https://tailwindcss.com/) - CSS framework

@@ -5,7 +5,6 @@ liveUrl: https://steambrew.app/plugin?id=c0f9737e4a5b
 liveUrlLabel: Steam Millenium plugin page
 githubUrl: https://github.com/Leon135/cswatch-plugin
 technologies:
-  - TypeScript
   - Steam Millenium
 featured: false
 status: active
@@ -13,9 +12,11 @@ status: active
 
 ## Description
 
-I used to play CS. Of course I was like others irritated by the fact that sometimes a lvl 1 account created a week ago was playing better than s1mple in his prime.. Checking their stats by manually going to websites was a teadious task. That is why I decided to make a simple plugin for Steam client that adds a button to quickly check player's stats on [CSWatch](https://cswat.ch) website. It is a simple plugin, but it saves a lot of time and makes it easier to check player's stats. Maybe it doesn't have a bunch of downloads but hey, it taught me about working with plugin api and Steam Millenium. Maybe I will add more plugins to Steam Millenium?
+I used to play CS. **Of course I was like others irritated by the fact that sometimes a lvl 1 account created a week ago was playing better than s1mple in his prime..** Checking their stats by manually going to websites was a teadious task. 
 
-It is based on the work of **@TOR968**—massive thanks to him for his contributions and inspiration. I am really happy with the result, and I hope it will be useful for many people who want to quickly check CS2 player stats on CSWatch website.
+That is why I decided to make a  plugin for Steam client that adds a button to quickly check player's stats on [CSWatch](https://cswat.ch) website. Simple plugin, but it saves a lot of time and makes it easier to check player's stats. Maybe it doesn't have a bunch of downloads but **hey, it taught me about working with plugin api and Steam Millenium.** Maybe I will add more plugins to Steam Millenium?
+
+Based on the work of **@TOR968**—massive thanks to him for his contributions and inspiration. Result makes me really happy, and I hope it will be useful for many people who want to quickly check CS2 player stats on CSWatch website.
 
 ## Screenshots
 
@@ -25,6 +26,6 @@ It is based on the work of **@TOR968**—massive thanks to him for his contribut
 
 ## Built with
 
-- [Steam Millenium](https://github.com/SteamClientHomebrew/Millennium) - modding framework for Steam client
-- [CSWatch](https://cswat.ch) - website with stats for CS2 players
-- [Tor968's original plugin](https://github.com/TOR968/leetify-extension)
+- [TypeScript](https://www.typescriptlang.org/) - Programming language
+- [Steam Millenium](https://github.com/SteamClientHomebrew/Millennium) - Modding framework for Steam client
+- [CSWatch](https://cswat.ch) - Website with stats for CS2 players
