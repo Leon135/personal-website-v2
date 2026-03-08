@@ -108,9 +108,14 @@ export function ContactSection() {
           </div>
         </TooltipProvider>
       </div>
-      <div className="flex justify-center max-w-5xl mx-auto mt-16">
+      <motion.div className="flex justify-center max-w-5xl mx-auto mt-16"
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
+        viewport={{ once: true }}
+      >
         <EmailForm />
-      </div>
+      </motion.div>
     </section>
   );
 }
