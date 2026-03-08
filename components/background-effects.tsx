@@ -15,8 +15,8 @@ export function BackgroundEffects() {
   const particlesRef = useRef<Particle[]>([]);
   const animationRef = useRef<number>(0);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [particlesMultiplier, setParticlesMultiplier] = useState(1);
-  const [connectionDistance, setConnectionDistance] = useState(120);
+  const [particlesMultiplier, setParticlesMultiplier] = useState(1.5);
+  const [connectionDistance, setConnectionDistance] = useState(100);
   const [scrollProgressMultiplier, setScrollProgressMultiplier] = useState(1);
 
   // Track scroll progress
@@ -30,6 +30,23 @@ export function BackgroundEffects() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Adjust particle multiplier based on viewport size
+  // useEffect(() => {
+  //   const updateParticleMultiplier = () => {
+  //     const width = window.innerWidth;
+  //     if (width < 640) {
+  //       setParticlesMultiplier(1.2);      // Mobile: +20%
+  //     } else if (width < 1024) {
+  //       setParticlesMultiplier(1.5);      // Tablet: +50%
+  //     } else {
+  //       setParticlesMultiplier(2);        // Desktop: 2x
+  //     }
+  //   };
+  //   updateParticleMultiplier();
+  //   window.addEventListener("resize", updateParticleMultiplier);
+  //   return () => window.removeEventListener("resize", updateParticleMultiplier);
+  // }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -75,7 +92,7 @@ export function BackgroundEffects() {
         // Draw particle
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(168, 85, 247, 0.5)";
+        ctx.fillStyle = "rgba(168, 85, 247, 0.87)";
         ctx.fill();
 
         // Draw connections
@@ -86,12 +103,12 @@ export function BackgroundEffects() {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < connectionDistance) {
-            const opacity = (1 - distance / connectionDistance) * 0.2;
+            const opacity = (1 - distance / connectionDistance) * 0.65;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.strokeStyle = `rgba(168, 85, 247, ${opacity})`;
-            ctx.lineWidth = 1;
+            ctx.lineWidth = 1.3;
             ctx.stroke();
           }
         }
@@ -108,19 +125,19 @@ export function BackgroundEffects() {
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [particlesMultiplier, connectionDistance]);
 
   // Calculate opacity based on scroll - fades out as you scroll down
-  const particleOpacity = Math.max(
-    0.1,
-    1 - scrollProgress * scrollProgressMultiplier,
-  );
+  const particleOpacity = Math.min(Math.max(1 - scrollProgress, 0.2), 1)
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+      {/* Lighter background base */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/97 to-background/98" />
+      {/* Canvas with blend mode for better visibility */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 transition-opacity duration-300"
+        className="absolute inset-0 transition-opacity duration-300 mix-blend-screen"
         style={{ opacity: particleOpacity }}
       />
     </div>
