@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { ExternalLink, Github, ArrowUpRight } from "lucide-react"
-import { GlowCard } from "./glow-card"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { getStatusBadgeClasses, getStatusLabel } from "@/lib/status-utils"
-import type { Project } from "@/lib/types"
+import { motion } from "framer-motion";
+import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
+import { GlowCard } from "./glow-card";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { getStatusBadgeClasses, getStatusLabel } from "@/lib/status-utils";
+import type { Project } from "@/lib/types";
 
 interface ProjectCardProps {
-  project: Project
-  index: number
-  onOpenModal: (project: Project) => void
+  project: Project;
+  index: number;
+  onOpenModal: (project: Project) => void;
 }
 
 export function ProjectCard({ project, index, onOpenModal }: ProjectCardProps) {
@@ -110,5 +110,5 @@ export function ProjectCard({ project, index, onOpenModal }: ProjectCardProps) {
         </button>
       </GlowCard>
     </motion.article>
-  )
+  );
 }
