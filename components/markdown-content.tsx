@@ -141,9 +141,17 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
 
       return (
         <figure className="flex flex-col self-center items-center my-5">
-          <div className="overflow-hidden rounded-lg border border-border bg-secondary/40">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={src} alt={alt ?? ""} style={style} className={imgClass} loading="lazy" />
+          <div className="overflow-hidden rounded-lg border border-border bg-secondary/40 cursor-pointer hover:border-primary/40 transition-colors">
+            {/* eslint-disable-next-line */}
+            <img 
+              src={src} 
+              alt={alt ?? ""} 
+              title="Click to open in new window"
+              style={style} 
+              className={`${imgClass} cursor-pointer`}
+              loading="lazy" 
+              onClick={() => window.open(src, "_blank")} 
+            />
           </div>
           {alt && (
             <figcaption className="mt-2 text-center text-xs text-muted-foreground font-mono">
