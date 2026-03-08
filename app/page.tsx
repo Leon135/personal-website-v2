@@ -5,6 +5,7 @@ import { ContactSection } from "@/components/contact-section"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { BackgroundEffects } from "@/components/background-effects"
+import { ParticleSettings } from "@/components/particles-settings"
 import { getAllProjects } from "@/lib/projects"
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <main className="relative">
       <BackgroundEffects />
+      {/* <ParticleSettings /> */}
       <HeroSection />
       <AboutSection />
       <ProjectsSection projects={projects} />
