@@ -13,21 +13,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { Components } from "react-markdown";
-import type { Element } from "hast";
+import rehypeRaw from 'rehype-raw'
 
 interface MarkdownContentProps {
   content: string;
 }
 
 // Check if AST node contains an image (which we render as a block-level figure)
-function containsImage(node: Element): boolean {
-  if (!node.children) return false;
-  return node.children.some((child) => {
+function containsImage(node: any): boolean {
+  if (!node || !node.children) return false;
+  return node.children.some((child: any) => {
     if (child.type === "element" && child.tagName === "img") {
       return true;
     }
     if (child.type === "element" && child.children) {
-      return containsImage(child as Element);
+      return containsImage(child);
     }
     return false;
   });
@@ -131,19 +131,19 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
       </a>
     ),
 
-    // Images — rendered in a styled container
-    img: ({ src, alt }) => {
+    // Images — rendered in a styled container. Respect width/height when provided.
+    img: ({ src, alt, width, height }) => {
       if (!src) return null;
+
+      const style: any = {};
+      // If width/height provided, don't force full width via CSS.
+      const imgClass = width || height ? `object-cover` : `w-full h-auto object-cover`;
+
       return (
-        <figure className="my-5">
+        <figure className="flex flex-col self-center items-center my-5">
           <div className="overflow-hidden rounded-lg border border-border bg-secondary/40">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={src}
-              alt={alt ?? ""}
-              className="w-full h-auto object-cover"
-              loading="lazy"
-            />
+            <img src={src} alt={alt ?? ""} style={style} className={imgClass} loading="lazy" />
           </div>
           {alt && (
             <figcaption className="mt-2 text-center text-xs text-muted-foreground font-mono">
@@ -190,7 +190,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
 
   return (
     <div className="markdown-content">
-      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={components}>
         {content}
       </ReactMarkdown>
     </div>
