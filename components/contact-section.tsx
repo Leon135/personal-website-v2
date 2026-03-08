@@ -10,6 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { EmailForm } from "@/components/email-form";
 
 const socialLinks = [
   {
@@ -106,6 +107,9 @@ export function ContactSection() {
             ))}
           </div>
         </TooltipProvider>
+      </div>
+      <div className="flex justify-center max-w-5xl mx-auto mt-16">
+        <EmailForm />
       </div>
     </section>
   );
