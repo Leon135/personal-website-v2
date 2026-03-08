@@ -92,7 +92,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
     // Blockquote — styled as a pull-quote container
     blockquote: ({ children }) => (
       <blockquote className="my-4 pl-4 border-l-2 border-primary bg-primary/5 rounded-r-lg py-3 pr-4">
-        <div className="text-sm text-muted-foreground italic space-y-1 [&>p]:mb-0 [&>p]:leading-relaxed">
+        <div className="text-md text-muted-foreground italic space-y-1 [&>p]:mb-0 [&>p]:leading-relaxed">
           {children}
         </div>
       </blockquote>
@@ -113,7 +113,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
     // List item
     li: ({ children }) => (
       <li className="flex items-start gap-2 text-muted-foreground leading-relaxed">
-        <span className="mt-2 w-1 h-1 rounded-full bg-primary shrink-0" />
+        <span className="mt-3 w-1 h-1 rounded-full bg-primary shrink-0" />
         <span className="flex-1">{children}</span>
       </li>
     ),
