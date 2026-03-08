@@ -1,10 +1,12 @@
 {
-  "name": "my-project",
-  "version": "0.1.0",
+  "name": "personal-website-v2",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy": "touch out/CNAME && echo 'leon135.xyz' > out/CNAME && touch out/.nojekyll&& gh-pages -d out --dotfiles",
+    "test-build": "npx serve out",
     "start": "next start",
     "lint": "eslint ."
   },
@@ -46,7 +48,6 @@
     "embla-carousel-react": "8.6.0",
     "framer-motion": "^11.18.0",
     "gray-matter": "^4.0.3",
-    "hast": "^1.0.0",
     "input-otp": "1.4.2",
     "lucide-react": "^0.564.0",
     "next": "16.1.6",
@@ -70,6 +71,7 @@
     "@types/node": "^22",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.5",
     "tailwindcss": "^4.2.0",
     "tw-animate-css": "1.3.3",
