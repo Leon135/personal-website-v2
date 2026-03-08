@@ -8,7 +8,7 @@ technologies:
   - Bielik AI
   - SJP
   - LibreOffice Dictionary
-featured: false
+featured: true
 status: in-development
 ---
 

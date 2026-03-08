@@ -2,6 +2,7 @@
 title: PARAMETR TO NIEWOLA
 description: Extended matura countdown with George Orwell's 1984 theme and vintage screen effects with disapproval of CKE and Polish education system.
 liveUrl: https://parametrtoniewola.xyz
+liveUrlLabel: Join the rebelion!
 githubUrl: https://github.com/Leon135/parametr-to-niewola
 technologies:
   - Astro

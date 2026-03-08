@@ -13,9 +13,9 @@ status: active
 
 ## Description
 
-This plugin adds a simple button under your Steam profile that redirects you to the [cswat.ch](https://cswat.ch) website.
+I used to play CS. Of course I was like others irritated by the fact that sometimes a lvl 1 account created a week ago was playing better than s1mple in his prime.. Checking their stats by manually going to websites was a teadious task. That is why I decided to make a simple plugin for Steam client that adds a button to quickly check player's stats on [CSWatch](https://cswat.ch) website. It is a simple plugin, but it saves a lot of time and makes it easier to check player's stats. Maybe it doesn't have a bunch of downloads but hey, it taught me about working with plugin api and Steam Millenium. Maybe I will add more plugins to Steam Millenium?
 
-It is based on the work of **@TOR968**—massive thanks to him for his contributions and inspiration
+It is based on the work of **@TOR968**—massive thanks to him for his contributions and inspiration. I am really happy with the result, and I hope it will be useful for many people who want to quickly check CS2 player stats on CSWatch website.
 
 ## Screenshots
 
