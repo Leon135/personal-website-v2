@@ -12,7 +12,7 @@ const BASE_URL = "https://leon135.xyz"
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Leon135 — Developer Portfolio",
+    default: "Leon135",
     template: "%s | Leon135",
   },
   description:
@@ -30,15 +30,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: BASE_URL,
-    siteName: "Leon135 — Developer Portfolio",
-    title: "Leon135 — Developer Portfolio",
+    siteName: "Leon135",
+    title: "Leon135r",
     description:
       "Portfolio of Leon135",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Leon135 — Developer Portfolio",
+    title: "Leon135",
     description:
       "Portfolio of Leon135",
     creator: "@Leon135",
