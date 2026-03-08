@@ -68,7 +68,7 @@ const principles = [
   },
   {
     icon: Flame,
-    title: "Staying Motivated & In Habit",
+    title: "Staying Disciplined & In Habit",
     description:
       "Discipline beats motivation. Building habits that compound into results over time.",
   },
