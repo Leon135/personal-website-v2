@@ -91,8 +91,8 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
 
     // Blockquote — styled as a pull-quote container
     blockquote: ({ children }) => (
-      <blockquote className="my-4 pl-4 border-l-2 border-primary bg-primary/5 rounded-r-lg py-3 pr-4">
-        <div className="text-md text-muted-foreground italic space-y-1 [&>p]:mb-0 [&>p]:leading-relaxed">
+      <blockquote className="pl-4 border-l-2 border-primary bg-primary/5 rounded-r-lg pr-4 whitespace-pre-line">
+        <div className="text-md text-muted-foreground italic p-0 m-0">
           {children}
         </div>
       </blockquote>
