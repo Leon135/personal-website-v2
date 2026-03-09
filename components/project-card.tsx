@@ -28,7 +28,7 @@ export function ProjectCard({ project, index, onOpenModal }: ProjectCardProps) {
           onClick={() => onOpenModal(project)}
           className="w-full h-full text-left"
         >
-          <Card className="relative hover:border-primary/50 transition-colors duration-300 h-full gap-0 py-0 bg-secondary/30 border-border hover:border-primary/30 hover:bg-secondary/50 group">
+          <Card className="relative hover:border-primary/80 hover:border transition-colors duration-300 h-full gap-0 py-0 bg-secondary/30 group">
             <CardContent className="pt-6 pb-4 flex flex-col flex-1">
               {/* Index number */}
               <span className="absolute top-4 right-4 font-mono text-xs text-muted-foreground/30">
