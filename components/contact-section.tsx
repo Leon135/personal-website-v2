@@ -72,7 +72,7 @@ export function ContactSection() {
                   <TooltipTrigger asChild>
                     <Button
                       variant="outline"
-                      className="flex flex-col items-center justify-center gap-3 p-4 h-auto w-full bg-secondary/30 border-border hover:border-primary/30 hover:bg-secondary/50 group"
+                      className="flex flex-col items-center justify-center gap-3 p-4 h-auto w-full bg-secondary/30 border-border hover:border-primary/80 group"
                       asChild
                     >
                       <a
