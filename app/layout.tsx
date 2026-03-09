@@ -56,7 +56,8 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
     },
   },
-  icons: "/pfp.jpg"
+  icons: "/pfp.jpg",
+  themeColor: "dark"
 }
 
 export default function RootLayout({
@@ -66,6 +67,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="darkreader-lock"/>
+      </head>
       <body className="font-sans antialiased">
         {children}
         <Analytics />
