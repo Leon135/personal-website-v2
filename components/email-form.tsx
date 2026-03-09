@@ -64,7 +64,7 @@ export function EmailForm() {
   }
 
   return (
-    <Card className="w-full bg-secondary/30 border-border hover:border-primary/80 hover:bg-secondary/50 group">
+    <Card className="w-full bg-secondary/30 border-border hover:border-primary/80 hover:bg-secondary/30 group">
       <CardHeader>
         <CardTitle>Email form</CardTitle>
         <CardDescription>
