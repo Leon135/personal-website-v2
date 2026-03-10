@@ -39,7 +39,7 @@ export function HeroSection() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>
           <span className="text-xs font-mono text-muted-foreground tracking-wide">
-            UNEMPLOYED STUDENT
+            SEEKING NEW OPPORTUNITIES
           </span>
         </motion.div>
 
