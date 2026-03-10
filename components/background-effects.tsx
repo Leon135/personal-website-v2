@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useWindowSize } from "@/hooks/use-window-size";
 
 interface Particle {
   x: number;
@@ -48,6 +49,10 @@ export function BackgroundEffects() {
   //   return () => window.removeEventListener("resize", updateParticleMultiplier);
   // }, []);
 
+  // Dynamically adjust window size for canvas
+  const [windowWidth, windowHeight] = useWindowSize();
+
+  // Main animation loop with updates based on window size, particle multiplier, connection distance, and scroll progress multiplier
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -55,15 +60,13 @@ export function BackgroundEffects() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resize();
+    canvas.width = windowWidth;
+    canvas.height = windowHeight;
 
     // Initialize particles
     const particleCount =
-      Math.floor((canvas.width * canvas.height) / 20000) * particlesMultiplier;
+      Math.floor((canvas.width * canvas.height) / 20000) *
+      particlesMultiplier;
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -119,21 +122,18 @@ export function BackgroundEffects() {
 
     animate();
 
-    window.addEventListener("resize", resize);
-
     return () => {
       cancelAnimationFrame(animationRef.current);
-      window.removeEventListener("resize", resize);
     };
-  }, [particlesMultiplier, connectionDistance]);
+  }, [particlesMultiplier, connectionDistance, scrollProgressMultiplier, windowWidth, windowHeight]);
 
   // Calculate opacity based on scroll - fades out as you scroll down
-  const particleOpacity = Math.min(Math.max(1 - scrollProgress, 0.2), 1)
+  const particleOpacity = Math.min(Math.max(1 - scrollProgress, 0.2), 1);
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
       {/* Lighter background base */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/97 to-background/98" />
+      <div className="absolute inset-0 bg-linear-to-b from-background via-background/97 to-background/98" />
       {/* Canvas with blend mode for better visibility */}
       <canvas
         ref={canvasRef}
