@@ -56,8 +56,7 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
     },
   },
-  icons: "/pfp.jpg",
-  themeColor: "dark"
+  icons: "/pfp.jpg"
 }
 
 export default function RootLayout({
