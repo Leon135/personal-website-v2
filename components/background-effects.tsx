@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "@/hooks/use-window-size";
+import { ParticleSettings } from "@/lib/particle-settings";
 
 interface Particle {
   x: number;
@@ -11,15 +12,11 @@ interface Particle {
   size: number;
 }
 
-export function BackgroundEffects() {
+export function BackgroundEffects({settings}: {settings: ParticleSettings}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animationRef = useRef<number>(0);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [particlesMultiplier, setParticlesMultiplier] = useState(1.5);
-  const [connectionDistance, setConnectionDistance] = useState(100);
-  const [scrollProgressMultiplier, setScrollProgressMultiplier] = useState(1);
-
   // Track scroll progress
   useEffect(() => {
     const handleScroll = () => {
@@ -31,23 +28,6 @@ export function BackgroundEffects() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Adjust particle multiplier based on viewport size
-  // useEffect(() => {
-  //   const updateParticleMultiplier = () => {
-  //     const width = window.innerWidth;
-  //     if (width < 640) {
-  //       setParticlesMultiplier(1.2);      // Mobile: +20%
-  //     } else if (width < 1024) {
-  //       setParticlesMultiplier(1.5);      // Tablet: +50%
-  //     } else {
-  //       setParticlesMultiplier(2);        // Desktop: 2x
-  //     }
-  //   };
-  //   updateParticleMultiplier();
-  //   window.addEventListener("resize", updateParticleMultiplier);
-  //   return () => window.removeEventListener("resize", updateParticleMultiplier);
-  // }, []);
 
   // Dynamically adjust window size for canvas
   const [windowWidth, windowHeight] = useWindowSize();
@@ -66,13 +46,13 @@ export function BackgroundEffects() {
     // Initialize particles
     const particleCount =
       Math.floor((canvas.width * canvas.height) / 20000) *
-      particlesMultiplier;
+      settings.particlesMultiplier;
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      size: Math.random() * 2 + 1,
+      vx: (Math.random() - 0.5) * settings.particleVelocity,
+      vy: (Math.random() - 0.5) * settings.particleVelocity,
+      size: (Math.random() * 2 + 1 * settings.particleSize),
     }));
 
     const animate = () => {
@@ -105,8 +85,8 @@ export function BackgroundEffects() {
           const dy = p.y - p2.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < connectionDistance) {
-            const opacity = (1 - distance / connectionDistance) * 0.65;
+          if (distance < settings.connectionDistance) {
+            const opacity = (1 - distance / settings.connectionDistance) * 0.65;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
@@ -125,7 +105,7 @@ export function BackgroundEffects() {
     return () => {
       cancelAnimationFrame(animationRef.current);
     };
-  }, [particlesMultiplier, connectionDistance, scrollProgressMultiplier, windowWidth, windowHeight]);
+  }, [settings, windowWidth, windowHeight]);
 
   // Calculate opacity based on scroll - fades out as you scroll down
   const particleOpacity = Math.min(Math.max(1 - scrollProgress, 0.2), 1);
