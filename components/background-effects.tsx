@@ -1,7 +1,7 @@
 "use client";
 
 import { useWindowSize } from "@/hooks/use-window-size";
-import { calculateRefreshRate, calculateFrameInterval } from "@/lib/framerate-utils";
+import { calculateFrameInterval, calculateRefreshRate } from "@/lib/framerate-utils";
 import { ParticleSettings } from "@/lib/particle-settings";
 import { useEffect, useRef } from "react";
 
@@ -72,8 +72,8 @@ export function BackgroundEffects({ settings }: { settings: ParticleSettings; })
   const lastUpdateTimeRef = useRef(0);
   const spatialGridRef = useRef<SpatialGrid | null>(null);
   const refreshRateRef = useRef(60);
+  const lastHeightRef = useRef(window.innerHeight);
 
-  // Dynamically adjust window size for canvas
   const [windowWidth, windowHeight] = useWindowSize();
 
   // Calculate refresh rate once on mount
@@ -111,21 +111,40 @@ export function BackgroundEffects({ settings }: { settings: ParticleSettings; })
     canvas.width = windowWidth;
     canvas.height = windowHeight;
 
-    // Initialize spatial grid with cell size based on connection distance
-    const cellSize = Math.max(settings.connectionDistance * 1.5, 50);
-    spatialGridRef.current = new SpatialGrid(windowWidth, windowHeight, cellSize);
+    // Check if we should reset particles
+    const lastHeight = lastHeightRef.current;
+    const heightDiff = lastHeight - windowHeight;
 
-    // Initialize particles
-    const particleCount =
-      Math.floor((canvas.width * canvas.height) / 20000) *
-      settings.particlesMultiplier;
-    particlesRef.current = Array.from({ length: particleCount }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * settings.particleVelocity,
-      vy: (Math.random() - 0.5) * settings.particleVelocity,
-      size: (Math.random() * 2 + 1 * settings.particleSize),
-    }));
+    // Reset particles if:
+    // 1. Height increased (likely real resize or orientation change)
+    // 2. Height decreased by more than 50px (real resize, not just urlbar)
+    // Skip reset if height decreased by less than 50px (browser UI changes)
+    const shouldResetParticles =
+      particlesRef.current.length === 0 || // First init
+      windowHeight > lastHeight || // Height grew
+      (windowHeight < lastHeight && heightDiff > 50); // Significant height drop
+
+    if (shouldResetParticles) {
+      const cellSize = Math.max(settings.connectionDistance * 1.5, 50);
+      spatialGridRef.current = new SpatialGrid(windowWidth, windowHeight, cellSize);
+
+      const particleCount =
+        Math.floor((windowWidth * windowHeight) / 20000) *
+        settings.particlesMultiplier;
+      particlesRef.current = Array.from({ length: particleCount }, () => ({
+        x: Math.random() * windowWidth,
+        y: Math.random() * windowHeight,
+        vx: (Math.random() - 0.5) * settings.particleVelocity,
+        vy: (Math.random() - 0.5) * settings.particleVelocity,
+        size: (Math.random() * 2 + 1 * settings.particleSize),
+      }));
+    } else if (spatialGridRef.current) {
+      // Just update spatial grid dimensions
+      spatialGridRef.current.width = windowWidth;
+      spatialGridRef.current.height = windowHeight;
+    }
+
+    lastHeightRef.current = windowHeight;
 
     const animate = () => {
       if (!ctx || !canvas || !spatialGridRef.current) return;
