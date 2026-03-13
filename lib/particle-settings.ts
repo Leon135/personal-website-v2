@@ -12,4 +12,4 @@ export const defaultParticleSettings: ParticleSettings = {
   particleSize: 1,
   connectionDistance: 100,
   scrollProgressMultiplier: 1,
-}
+};

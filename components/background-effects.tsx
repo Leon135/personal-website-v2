@@ -3,7 +3,7 @@
 import { useWindowSize } from "@/hooks/use-window-size";
 import { calculateFrameInterval, calculateRefreshRate } from "@/lib/framerate-utils";
 import { ParticleSettings } from "@/lib/particle-settings";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Particle {
   x: number;
@@ -68,13 +68,19 @@ export function BackgroundEffects({ settings }: { settings: ParticleSettings; })
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animationRef = useRef<number>(0);
-  const scrollProgressRef = useRef(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const lastUpdateTimeRef = useRef(0);
   const spatialGridRef = useRef<SpatialGrid | null>(null);
   const refreshRateRef = useRef(60);
-  const lastHeightRef = useRef(window.innerHeight);
+  const lastHeightRef = useRef(0);
+
 
   const [windowWidth, windowHeight] = useWindowSize();
+
+  // Initialize lastHeightRef on mount
+  useEffect(() => {
+    lastHeightRef.current = window.innerHeight;
+  }, []);
 
   // Calculate refresh rate once on mount
   useEffect(() => {
@@ -94,11 +100,11 @@ export function BackgroundEffects({ settings }: { settings: ParticleSettings; })
       const scrollHeight =
         document.documentElement.scrollHeight - window.innerHeight;
       const progress = Math.min(window.scrollY / scrollHeight, 1);
-      scrollProgressRef.current = progress;
+      setScrollProgress(progress);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [scrollFrameRateInterval]);
 
   // Main animation loop with updates based on window size, particle multiplier, connection distance, and scroll progress multiplier
   useEffect(() => {
@@ -216,7 +222,7 @@ export function BackgroundEffects({ settings }: { settings: ParticleSettings; })
   }, [settings, windowWidth, windowHeight]);
 
   // Calculate opacity based on scroll - fades out as you scroll down
-  const particleOpacity = Math.min(Math.max(1 - scrollProgressRef.current, 0.2), 1);
+  const particleOpacity = Math.min(Math.max(1 - scrollProgress * settings.scrollProgressMultiplier, 0.2), 1);
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
