@@ -73,13 +73,14 @@ export function BackgroundEffects({ settings }: { settings: ParticleSettings; })
   const spatialGridRef = useRef<SpatialGrid | null>(null);
   const refreshRateRef = useRef(60);
   const lastHeightRef = useRef(0);
-
+  const lastWidthRef = useRef(0);
 
   const [windowWidth, windowHeight] = useWindowSize();
 
-  // Initialize lastHeightRef on mount
+  // Initialize lastHeightRef and lastWidthRef on mount
   useEffect(() => {
     lastHeightRef.current = window.innerHeight;
+    lastWidthRef.current = window.innerWidth;
   }, []);
 
   // Calculate refresh rate once on mount
@@ -119,16 +120,18 @@ export function BackgroundEffects({ settings }: { settings: ParticleSettings; })
 
     // Check if we should reset particles
     const lastHeight = lastHeightRef.current;
-    const heightDiff = lastHeight - windowHeight;
+    const lastWidth = lastWidthRef.current;
+    const heightDiff = Math.abs(lastHeight - windowHeight);
+    const widthDiff = Math.abs(lastWidth - windowWidth);
 
     // Reset particles if:
-    // 1. Height increased (likely real resize or orientation change)
-    // 2. Height decreased by more than 50px (real resize, not just urlbar)
-    // Skip reset if height decreased by less than 50px (browser UI changes)
+    // - First initialization
+    // - Height OR width changed significantly (> 100px threshold)
+    // Skip tiny changes (< 100px) - these are urlbar/keyboard on mobile
     const shouldResetParticles =
       particlesRef.current.length === 0 || // First init
-      windowHeight > lastHeight || // Height grew
-      (windowHeight < lastHeight && heightDiff > 50); // Significant height drop
+      heightDiff > 100 || // Significant height change
+      widthDiff > 100; // Significant width change
 
     if (shouldResetParticles) {
       const cellSize = Math.max(settings.connectionDistance * 1.5, 50);
@@ -151,6 +154,7 @@ export function BackgroundEffects({ settings }: { settings: ParticleSettings; })
     }
 
     lastHeightRef.current = windowHeight;
+    lastWidthRef.current = windowWidth;
 
     const animate = () => {
       if (!ctx || !canvas || !spatialGridRef.current) return;
