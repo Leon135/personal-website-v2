@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "@/hooks/use-window-size";
+import { calculateRefreshRate, calculateFrameInterval } from "@/lib/framerate-utils";
 import { ParticleSettings } from "@/lib/particle-settings";
+import { useEffect, useRef } from "react";
 
 interface Particle {
   x: number;
@@ -12,25 +13,92 @@ interface Particle {
   size: number;
 }
 
-export function BackgroundEffects({settings}: {settings: ParticleSettings}) {
+// Spatial partitioning grid for efficient collision detection
+class SpatialGrid {
+  cellSize: number;
+  grid: Map<string, Particle[]>;
+  width: number;
+  height: number;
+
+  constructor(width: number, height: number, cellSize: number) {
+    this.width = width;
+    this.height = height;
+    this.cellSize = cellSize;
+    this.grid = new Map();
+  }
+
+  getCellKey(x: number, y: number): string {
+    const gridX = Math.floor(x / this.cellSize);
+    const gridY = Math.floor(y / this.cellSize);
+    return `${gridX},${gridY}`;
+  }
+
+  insert(particle: Particle): void {
+    const key = this.getCellKey(particle.x, particle.y);
+    if (!this.grid.has(key)) {
+      this.grid.set(key, []);
+    }
+    this.grid.get(key)!.push(particle);
+  }
+
+  getNearby(particle: Particle): Particle[] {
+    const gridX = Math.floor(particle.x / this.cellSize);
+    const gridY = Math.floor(particle.y / this.cellSize);
+    const nearby: Particle[] = [];
+
+    // Check all 9 cells (center + 8 neighbors)
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -1; dy <= 1; dy++) {
+        const key = `${gridX + dx},${gridY + dy}`;
+        const cells = this.grid.get(key);
+        if (cells) {
+          nearby.push(...cells);
+        }
+      }
+    }
+    return nearby;
+  }
+
+  clear(): void {
+    this.grid.clear();
+  }
+}
+
+export function BackgroundEffects({ settings }: { settings: ParticleSettings; }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animationRef = useRef<number>(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  // Track scroll progress
+  const scrollProgressRef = useRef(0);
+  const lastUpdateTimeRef = useRef(0);
+  const spatialGridRef = useRef<SpatialGrid | null>(null);
+  const refreshRateRef = useRef(60);
+
+  // Dynamically adjust window size for canvas
+  const [windowWidth, windowHeight] = useWindowSize();
+
+  // Calculate refresh rate once on mount
+  useEffect(() => {
+    calculateRefreshRate().then((rate) => {
+      refreshRateRef.current = rate;
+      console.log(`Calculated refresh rate: ${rate} FPS, frame interval: ${calculateFrameInterval(rate)} ms`);
+    });
+  }, []);
+
+  // Track scroll progress with proper throttling
+  const scrollFrameRateInterval = calculateFrameInterval(refreshRateRef.current);
   useEffect(() => {
     const handleScroll = () => {
+      const now = performance.now();
+      if (now - lastUpdateTimeRef.current < scrollFrameRateInterval) return;
+      lastUpdateTimeRef.current = now;
       const scrollHeight =
         document.documentElement.scrollHeight - window.innerHeight;
       const progress = Math.min(window.scrollY / scrollHeight, 1);
-      setScrollProgress(progress);
+      scrollProgressRef.current = progress;
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Dynamically adjust window size for canvas
-  const [windowWidth, windowHeight] = useWindowSize();
 
   // Main animation loop with updates based on window size, particle multiplier, connection distance, and scroll progress multiplier
   useEffect(() => {
@@ -42,6 +110,10 @@ export function BackgroundEffects({settings}: {settings: ParticleSettings}) {
 
     canvas.width = windowWidth;
     canvas.height = windowHeight;
+
+    // Initialize spatial grid with cell size based on connection distance
+    const cellSize = Math.max(settings.connectionDistance * 1.5, 50);
+    spatialGridRef.current = new SpatialGrid(windowWidth, windowHeight, cellSize);
 
     // Initialize particles
     const particleCount =
@@ -56,11 +128,15 @@ export function BackgroundEffects({settings}: {settings: ParticleSettings}) {
     }));
 
     const animate = () => {
-      if (!ctx || !canvas) return;
+      if (!ctx || !canvas || !spatialGridRef.current) return;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const particles = particlesRef.current;
+      const spatialGrid = spatialGridRef.current;
+
+      // Clear grid and rebuild it with updated positions
+      spatialGrid.clear();
 
       // Update and draw particles
       particles.forEach((p, i) => {
@@ -72,29 +148,42 @@ export function BackgroundEffects({settings}: {settings: ParticleSettings}) {
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
+        // Insert into spatial grid for connection detection
+        spatialGrid.insert(p);
+
         // Draw particle
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = "rgba(168, 85, 247, 0.87)";
         ctx.fill();
+      });
 
-        // Draw connections
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
+      // Draw connections using spatial partitioning
+      const connectionDistSq = settings.connectionDistance * settings.connectionDistance;
+
+      particles.forEach((p, i) => {
+        const nearby = spatialGrid.getNearby(p);
+
+        nearby.forEach((p2, j) => {
+          // Only draw connection to particles that come after in the particles array to avoid duplicates
+          const p2Index = particles.indexOf(p2);
+          if (p2Index <= i) return;
+
           const dx = p.x - p2.x;
           const dy = p.y - p2.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+          const distanceSq = dx * dx + dy * dy;
 
-          if (distance < settings.connectionDistance) {
+          if (distanceSq < connectionDistSq && distanceSq > 0) {
+            const distance = Math.sqrt(distanceSq);
             const opacity = (1 - distance / settings.connectionDistance) * 0.65;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.strokeStyle = `rgba(168, 85, 247, ${opacity})`;
-            ctx.lineWidth = 1.3;
+            ctx.lineWidth = 1;
             ctx.stroke();
           }
-        }
+        });
       });
 
       animationRef.current = requestAnimationFrame(animate);
@@ -108,7 +197,7 @@ export function BackgroundEffects({settings}: {settings: ParticleSettings}) {
   }, [settings, windowWidth, windowHeight]);
 
   // Calculate opacity based on scroll - fades out as you scroll down
-  const particleOpacity = Math.min(Math.max(1 - scrollProgress, 0.2), 1);
+  const particleOpacity = Math.min(Math.max(1 - scrollProgressRef.current, 0.2), 1);
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
@@ -117,7 +206,7 @@ export function BackgroundEffects({settings}: {settings: ParticleSettings}) {
       {/* Canvas with blend mode for better visibility */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 transition-opacity duration-300 mix-blend-screen"
+        className="absolute inset-0 mix-blend-screen"
         style={{ opacity: particleOpacity }}
       />
     </div>

@@ -202,6 +202,7 @@ export function AboutSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 * index }}
                 viewport={{ once: true }}
+                
               >
                 <Card className="bg-secondary/30 hover:border-primary/80 hover:border transition-colors group h-full gap-0 py-0">
                   <CardContent className="p-6 h-full">

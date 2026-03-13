@@ -1,60 +1,65 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 const navItems = [
   { name: "About", href: "#about" },
   { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
-]
+];
 
-const SPRING = { type: "spring", stiffness: 180, damping: 26, mass: 0.8 }
-const FADE = { duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }
+const SPRING = { type: "spring", stiffness: 180, damping: 26, mass: 0.8 };
+const FADE = { duration: 0.2, ease: [0.25, 0.1, 0.25, 1] };
 
 function useActiveSection() {
-  const [active, setActive] = useState<string | null>(null)
+  const [active, setActive] = useState<string | null>(null);
+  const lastUpdateRef = useRef(0);
 
   useEffect(() => {
     const onScroll = () => {
-      const scrollY = window.scrollY
-      const viewportH = window.innerHeight
-      const trigger = scrollY + viewportH * 0.4
+      const now = performance.now();
+      if (now - lastUpdateRef.current < 50) return; // ~20fps throttle
+      lastUpdateRef.current = now;
 
-      let best: string | null = null
-      let bestTop = -Infinity
+      const scrollY = window.scrollY;
+      const viewportH = window.innerHeight;
+      const trigger = scrollY + viewportH * 0.4;
+
+      let best: string | null = null;
+      let bestTop = -Infinity;
 
       navItems.forEach(({ href }) => {
-        const id = href.replace("#", "")
-        const el = document.getElementById(id)
-        if (!el) return
-        const top = el.getBoundingClientRect().top + scrollY
+        const id = href.replace("#", "");
+        const el = document.getElementById(id);
+        if (!el) return;
+        const top = el.getBoundingClientRect().top + scrollY;
         if (top <= trigger && top > bestTop) {
-          bestTop = top
-          best = id
+          bestTop = top;
+          best = id;
         }
-      })
+      });
 
-      setActive(best)
-    }
+      setActive(best);
+    };
 
-    onScroll()
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  return active
+  return active;
 }
 
 function NavItem({
   item,
   isActive,
 }: {
-  item: (typeof navItems)[number]
-  isActive: boolean
+  item: (typeof navItems)[number];
+  isActive: boolean;
 }) {
-  const [hovered, setHovered] = useState(false)
+  const [hovered, setHovered] = useState(false);
 
   return (
     <Button
@@ -78,8 +83,8 @@ function NavItem({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               className={`absolute inset-0 rounded-full border z-0 ${isActive || hovered
-                  ? "bg-primary/10 border-primary/25"
-                  : "bg-muted/50 border-border"
+                ? "bg-primary/10 border-primary/25"
+                : "bg-muted/50 border-border"
                 }`}
             />
           )}
@@ -108,11 +113,11 @@ function NavItem({
         </AnimatePresence>
       </a>
     </Button>
-  )
+  );
 }
 
 export function Navbar() {
-  const activeSection = useActiveSection()
+  const activeSection = useActiveSection();
 
   return (
     <motion.div
@@ -128,12 +133,12 @@ export function Navbar() {
         aria-label="Main navigation"
       >
         {navItems.map((item) => {
-          const id = item.href.replace("#", "")
+          const id = item.href.replace("#", "");
           return (
             <NavItem key={id} item={item} isActive={activeSection === id} />
-          )
+          );
         })}
       </motion.nav>
     </motion.div>
-  )
+  );
 }
