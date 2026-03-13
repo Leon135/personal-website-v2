@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Settings } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -13,21 +12,18 @@ import {
 } from "@/components/ui/dialog";
 import {
   Field,
-  FieldContent,
   FieldDescription,
-  FieldError,
   FieldGroup,
   FieldLabel,
-  FieldLegend,
-  FieldSeparator,
-  FieldSet,
-  FieldTitle,
+  FieldSet
 } from "@/components/ui/field";
 import { Slider } from "@/components/ui/slider";
-import { useEffect, useState } from "react";
 import { ParticleSettings, defaultParticleSettings } from "@/lib/particle-settings";
+import { motion } from "framer-motion";
+import { Settings } from "lucide-react";
+import { useEffect, useState } from "react";
 
-export function ParticleControls({ settings, onChange, onSave }: { settings: ParticleSettings, onChange?: (settings: ParticleSettings) => void, onSave?: (settings: ParticleSettings) => void }) {
+export function ParticleControls({ settings, onChange, onSave }: { settings: ParticleSettings, onChange?: (settings: ParticleSettings) => void, onSave?: (settings: ParticleSettings) => void; }) {
   const [particlesMultiplier, setParticlesMultiplier] = useState(settings.particlesMultiplier);
   const [particleVelocity, setParticleVelocity] = useState(settings.particleVelocity);
   const [particleSize, setParticleSize] = useState(settings.particleSize);
@@ -55,7 +51,7 @@ export function ParticleControls({ settings, onChange, onSave }: { settings: Par
       particleSize,
       connectionDistance,
       scrollProgressMultiplier,
-    }
+    };
     onChange?.(newSettings);
   }
 
@@ -70,14 +66,21 @@ export function ParticleControls({ settings, onChange, onSave }: { settings: Par
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-muted-foreground absolute top-4 right-4 z-100 transition-all duration-200 animate-in fade-in-0 zoom-in-50 hover:opacity-80 active:opacity-60"
-          hidden={isOpen}
+        <motion.div
+          initial={false}
+          animate={!isOpen ? { opacity: 1, scale: 1, pointerEvents: "auto" } : { opacity: 0, scale: 0.8, pointerEvents: "none" }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          style={{ position: "absolute", top: "1rem", right: "1rem", zIndex: 100 }}
         >
-          <Settings />
-        </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-muted-foreground hover:opacity-80 active:opacity-60"
+            disabled={isOpen}
+          >
+            <Settings />
+          </Button>
+        </motion.div>
       </DialogTrigger>
       <DialogContent className="flex flex-col max-h-[95vh] sm:max-h-none sm:max-w-md sm:translate-x-0 sm:translate-y-0 sm:top-4 sm:right-4 sm:left-auto gap-2" disableOverlay={true}>
         <DialogHeader>
